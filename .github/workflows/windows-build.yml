@@ -1,0 +1,57 @@
+name: Windows build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+
+      # release: false -> uses the preinstalled MSYS2 in C:\msys64,
+      # which is the path hardcoded in BuildConfs.cmake for clang
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          release: false
+          update: true
+          install: >-
+            mingw-w64-x86_64-clang
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-ninja
+            mingw-w64-x86_64-qt6-base
+            mingw-w64-x86_64-qt6-svg
+            mingw-w64-x86_64-qt6-tools
+            mingw-w64-x86_64-postgresql
+            mingw-w64-x86_64-libxml2
+
+      - name: Configure
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+            -DPGM_PREFIX="$PWD/dist/pgmodeler"
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Install
+        run: cmake --install build
+
+      - name: Deploy Qt and runtime DLLs
+        run: |
+          cd dist/pgmodeler
+          windeployqt6 --no-translations --no-system-d3d-compiler --no-opengl-sw pgmodeler.exe
+          for exe in *.exe; do
+            ldd "$exe" | grep -i '/mingw64/' | awk '{print $3}' | xargs -I{} cp -n {} . || true
+          done
+          for dll in lib*.dll; do
+            ldd "$dll" | grep -i '/mingw64/' | awk '{print $3}' | xargs -I{} cp -n {} . || true
+          done
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pgmodeler-win64
+          path: dist/pgmodeler
