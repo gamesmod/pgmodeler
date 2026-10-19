@@ -92,9 +92,17 @@ void ModelExportHelper::exportToSQL(DatabaseModel *db_model, const QString &file
 	try
 	{
 		progress=sql_gen_progress=0;
-		BaseObject::setPgSQLVersion(pgsql_ver);
+
+		/* For MPP flavors the version is the one of the PostgreSQL the engine is based on
+		 * so the version informed by the user is ignored */
+		BaseObject::setServerFlavor(db_model->getServerFlavor());
+
+		if(!PgSqlVersions::isMppFlavor(BaseObject::getServerFlavor()))
+			BaseObject::setPgSQLVersion(pgsql_ver);
+
 		emit s_progressUpdated(progress,
-													 tr("Generating SQL code for PostgreSQL `%1'").arg(BaseObject::getPgSQLVersion()),
+													 tr("Generating SQL code for %1 (PostgreSQL `%2' syntax)")
+													 .arg(PgSqlVersions::getFlavorName(BaseObject::getServerFlavor()), BaseObject::getPgSQLVersion()),
 													 ObjectType::BaseObject);
 		progress=1;
 
@@ -388,6 +396,10 @@ void ModelExportHelper::exportToDBMS(DatabaseModel *db_model, Connection conn, c
 		created_objs[ObjectType::Role]=created_objs[ObjectType::Tablespace]=-1;
 		errors.clear();
 
+		/* The flavor must be applied before connecting because the server
+		 * support check depends on it (Greenplum 6 is based on PostgreSQL 9.4) */
+		BaseObject::setServerFlavor(db_model->getServerFlavor());
+
 		//Retrive the DBMS version in order to generate the correct code
 		conn.connect();
 		version=conn.getPgSQLVersion(true);
@@ -395,7 +407,13 @@ void ModelExportHelper::exportToDBMS(DatabaseModel *db_model, Connection conn, c
 		emit s_progressUpdated(progress, tr("Starting export to DBMS."));
 
 		//Overriding the DBMS version case the version is informed on parameter
-		if(!pgsql_ver.isEmpty())
+		if(PgSqlVersions::isMppFlavor(BaseObject::getServerFlavor()))
+		{
+			// The syntax version is fixed by the engine flavor of the model
+			emit s_progressUpdated(progress, tr("Using %1 syntax (PostgreSQL `%2').")
+													 .arg(PgSqlVersions::getFlavorName(BaseObject::getServerFlavor()), BaseObject::getPgSQLVersion()));
+		}
+		else if(!pgsql_ver.isEmpty())
 		{
 			BaseObject::setPgSQLVersion(pgsql_ver);
 			emit s_progressUpdated(progress, tr("PostgreSQL version detection overridden. Using version `%1'.").arg(pgsql_ver));

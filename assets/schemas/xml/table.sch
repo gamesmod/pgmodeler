@@ -14,6 +14,11 @@
 %if {attribs-page} %then [ attribs-page=] "{attribs-page}" %end
 %if {ext-attribs-page} %then [ ext-attribs-page=] "{ext-attribs-page}" %end
 %if {faded-out} %then [ faded-out=] "true" %end
+%if {dist-policy} %then [ dist-policy=] "{dist-policy}" %end
+%if {dist-keys} %then [ dist-keys=] "&{dist-keys}" %end
+%if {storage} %then [ storage=] "{storage}" %end
+%if {compress-type} %then [ compress-type=] "{compress-type}" %end
+%if {compress-level} %then [ compress-level=] "{compress-level}" %end
 %if {rls-enabled} %then [ rls-enabled=] "true" %end
 %if {rls-forced} %then [ rls-forced=] "true" %end
 %if {max-obj-count} %then [ max-obj-count=] "{max-obj-count}" %end

@@ -649,6 +649,14 @@ class __libcore BaseObject {
 		//! \brief Returns the current version for SQL code generation
 		static QString getPgSQLVersion();
 
+		/*! \brief Sets the server flavor (see PgSqlVersions) used in SQL code generation.
+		 * For MPP flavors (Greenplum, Cloudberry) the PostgreSQL version is also set to the
+		 * one the engine is based on. Changing the flavor invalidates the cached code of all objects */
+		static void setServerFlavor(const QString &flavor);
+
+		//! \brief Returns the current server flavor
+		static QString getServerFlavor();
+
 		//! \brief Returns the set of attributes used by the search mechanism
 		attribs_map getSearchAttributes();
 

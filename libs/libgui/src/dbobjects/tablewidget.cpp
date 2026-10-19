@@ -48,6 +48,33 @@ TableWidget::TableWidget(QWidget *parent, ObjectType tab_type): BaseObjectWidget
 	connect(edt_data_tb, &QPushButton::clicked, this, __slot(this, TableWidget::editData));
 	misc_btns_lt->insertWidget(1, edt_data_tb);
 
+	// MPP (Greenplum/Cloudberry) options
+	dist_policy_cmb->addItem(tr("Default"), "");
+	dist_policy_cmb->addItem("HASH", Table::DistHash);
+	dist_policy_cmb->addItem("RANDOMLY", Table::DistRandom);
+	dist_policy_cmb->addItem("REPLICATED", Table::DistReplicated);
+
+	storage_cmb->addItem(tr("Default"), "");
+	storage_cmb->addItem("Heap", Table::StorageHeap);
+	storage_cmb->addItem("Append-optimized row", Table::StorageAoRow);
+	storage_cmb->addItem("Append-optimized column", Table::StorageAoColumn);
+	storage_cmb->addItem("PAX (Cloudberry)", Table::StoragePax);
+
+	compress_type_cmb->addItems({ "", "zstd", "zlib", "quicklz", "rle_type", "none" });
+
+	dist_cols_edt->setEnabled(false);
+	connect(dist_policy_cmb, &QComboBox::currentIndexChanged, this, [this](){
+		bool hash = dist_policy_cmb->currentData().toString() == Table::DistHash;
+		dist_cols_edt->setEnabled(hash);
+		dist_cols_lbl->setEnabled(hash);
+
+		if(!hash)
+			dist_cols_edt->clear();
+	});
+
+	// The tab is shown only for tables of models that target an MPP engine
+	attributes_tbw->setTabVisible(attributes_tbw->indexOf(mpp_tab), false);
+
 	std::map<QString, std::vector<QWidget *> > fields_map;
 	fields_map[generateVersionsInterval(UntilVersion, PgSqlVersions::PgSqlVersion110)].push_back(with_oids_chk);
 	highlightVersionSpecificFields(fields_map);
@@ -289,6 +316,7 @@ void TableWidget::setAttributes(DatabaseModel *model, OperationList *op_list, Sc
 	attributes_tbw->removeTab(attributes_tbw->indexOf(rules_tab)); //Removing the Rule tab
 	attributes_tbw->removeTab(attributes_tbw->indexOf(policies_tab)); //Removing the Policies tab
 	attributes_tbw->removeTab(attributes_tbw->indexOf(part_keys_tab)); //Removing the Partition keys tab
+	attributes_tbw->removeTab(attributes_tbw->indexOf(mpp_tab)); //Removing the MPP tab
 	objects_tab_map[ObjectType::Column]->setHeaderVisible(0, false); //Hiding the "PK" checkbox on columns grid
 	server_sel->setModel(this->model);
 	server_sel->setSelectedObject(ftable->getForeignServer());
@@ -361,6 +389,15 @@ void TableWidget::__setAttributes(DatabaseModel *model, OperationList *op_list, 
 			enable_rls_chk->setChecked(tab->isRLSEnabled());
 			force_rls_chk->setChecked(tab->isRLSForced());
 			with_oids_chk->setChecked(tab->isWithOIDs());
+
+			bool mpp = PgSqlVersions::isMppFlavor(model->getServerFlavor());
+			attributes_tbw->setTabVisible(attributes_tbw->indexOf(mpp_tab), mpp);
+
+			dist_policy_cmb->setCurrentIndex(std::max(0, dist_policy_cmb->findData(tab->getDistributionPolicy())));
+			dist_cols_edt->setText(tab->getDistributionColumns().join(", "));
+			storage_cmb->setCurrentIndex(std::max(0, storage_cmb->findData(tab->getStorage())));
+			compress_type_cmb->setCurrentText(tab->getCompressionType());
+			compress_level_sb->setValue(tab->getCompressionLevel());
 		}
 		else
 		{
@@ -969,6 +1006,28 @@ void TableWidget::applyConfiguration()
 			aux_tab->setRLSEnabled(enable_rls_chk->isChecked());
 			aux_tab->setRLSForced(force_rls_chk->isChecked());
 			aux_tab->setUnlogged(unlogged_chk->isChecked());
+
+			if(PgSqlVersions::isMppFlavor(model->getServerFlavor()))
+			{
+				QStringList dist_cols;
+
+				for(auto &col_name : dist_cols_edt->text().split(',', Qt::SkipEmptyParts))
+				{
+					dist_cols.append(col_name.trimmed());
+
+					if(!aux_tab->getColumn(dist_cols.last()))
+					{
+						throw Exception(Exception::getErrorMessage(ErrorCode::InvDistributionKeyColumn)
+														.arg(dist_cols.last(), aux_tab->getSignature()),
+														ErrorCode::InvDistributionKeyColumn, PGM_FUNC, PGM_FILE, PGM_LINE);
+					}
+				}
+
+				aux_tab->setDistribution(dist_policy_cmb->currentData().toString(), dist_cols);
+				aux_tab->setStorage(storage_cmb->currentData().toString(),
+														compress_type_cmb->currentText().trimmed(),
+														compress_level_sb->value());
+			}
 		}
 		// Applying settings specific to foreign table
 		else if(server_sel->isVisible())

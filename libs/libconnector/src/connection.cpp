@@ -578,6 +578,11 @@ bool Connection::isServerSupported()
 	try
 	{
 		QString version = getPgSQLVersion(true);
+
+		// Greenplum 6 is based on PostgreSQL 9.4, below the minimum supported version
+		if(PgSqlVersions::getServerFlavor() == PgSqlVersions::FlavorGreenplum6)
+			return true;
+
 		return version.toDouble() >= PgSqlVersions::MinimumVersion.toDouble();
 	}
 	catch(Exception &e)

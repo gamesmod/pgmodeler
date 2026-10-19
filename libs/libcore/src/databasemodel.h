@@ -151,6 +151,9 @@ class __libcore DatabaseModel:  public QObject, public BaseObject {
 		//! \brief Model's author
 		author,
 
+		//! \brief Server flavor targeted by the model (PostgreSQL, Greenplum, Cloudberry)
+		server_flavor { PgSqlVersions::FlavorPostgreSQL },
+
 		//! \brief Database localizations (LC_CTYPE, LC_COLLATE)
 		localizations[2];
 
@@ -443,6 +446,13 @@ class __libcore DatabaseModel:  public QObject, public BaseObject {
 
 		//! \brief Sets the model's author
 		void setAuthor(const QString &author);
+
+		/*! \brief Defines the server flavor targeted by the model (see PgSqlVersions::AllFlavors).
+		 * The flavor is saved in the model file and applied to the code generation when the model is loaded */
+		void setServerFlavor(const QString &flavor);
+
+		//! \brief Returns the server flavor targeted by the model
+		QString getServerFlavor();
 
 		//! \brief Sets the protection for all objects on the model
 		void setProtected(bool value) override;

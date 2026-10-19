@@ -1355,6 +1355,10 @@ void MainWindow::setCurrentModel(int idx)
 	if(prev_model && (prev_model == current_model))
 		return;
 
+	// The server flavor is global, so it follows the model being edited
+	if(current_model && current_model->getDatabaseModel())
+		BaseObject::setServerFlavor(current_model->getDatabaseModel()->getServerFlavor());
+
 	layers_cfg_wgt->setVisible(false);
 	models_tbw->setVisible(models_tbw->count() > 0);
 

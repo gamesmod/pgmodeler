@@ -176,6 +176,9 @@ class __libparsers SchemaParser {
 		//! \brief PostgreSQL version currently used by the parser
 		QString pgsql_version;
 
+		//! \brief The server flavor in effect when the version was last set
+		QString flavor;
+
 		/*! \brief Returns the boolean result of the comparison between left_val and right_val
 		 * using the provided operator oper (see Token*Oper) */
 		template<typename Type>
@@ -346,6 +349,13 @@ class __libparsers SchemaParser {
 
 		//! \brief Retorns the current PostgreSQL version used by the parser
 		QString getPgSQLVersion();
+
+		//! \brief Returns the server flavor captured by the last setPgSQLVersion() call
+		QString getFlavor();
+
+		/*! \brief Adds to the attributes the ones that describe the server flavor
+		 * (server-flavor, mpp, greenplum, cloudberry) so schema files can use them in conditions */
+		static void setFlavorAttributes(attribs_map &attribs);
 
 		//! \brief Extracts the attributes names from the currently loaded buffer
 		QStringList extractAttributes();

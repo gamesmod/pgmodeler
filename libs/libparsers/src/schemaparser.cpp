@@ -90,6 +90,7 @@ SchemaParser::SchemaParser()
 	line = column = 0;
 	ignore_unk_atribs = ignore_empty_atribs = false;
 	pgsql_version = PgSqlVersions::DefaulVersion;
+	flavor = PgSqlVersions::getServerFlavor();
 }
 
 void SchemaParser::setPgSQLVersion(const QString &pgsql_ver, bool ignore_db_version)
@@ -97,6 +98,7 @@ void SchemaParser::setPgSQLVersion(const QString &pgsql_ver, bool ignore_db_vers
 	try
 	{
 		pgsql_version = PgSqlVersions::parseString(pgsql_ver, ignore_db_version);
+		flavor = PgSqlVersions::getServerFlavor();
 	}
 	catch(Exception &e)
 	{
@@ -108,6 +110,23 @@ void SchemaParser::setPgSQLVersion(const QString &pgsql_ver, bool ignore_db_vers
 QString SchemaParser::getPgSQLVersion()
 {
 	return pgsql_version;
+}
+
+QString SchemaParser::getFlavor()
+{
+	return flavor;
+}
+
+void SchemaParser::setFlavorAttributes(attribs_map &attribs)
+{
+	QString flavor = PgSqlVersions::getServerFlavor();
+	bool gp = flavor == PgSqlVersions::FlavorGreenplum6 ||
+						flavor == PgSqlVersions::FlavorGreenplum7;
+
+	attribs[Attributes::ServerFlavor] = flavor;
+	attribs[Attributes::Mpp] = PgSqlVersions::isMppFlavor(flavor) ? Attributes::True : "";
+	attribs[Attributes::Greenplum] = gp ? Attributes::True : "";
+	attribs[Attributes::Cloudberry] = flavor == PgSqlVersions::FlavorCloudberry ? Attributes::True : "";
 }
 
 QStringList SchemaParser::extractAttributes()
@@ -1206,6 +1225,7 @@ QString SchemaParser::getSourceCode(const QString & obj_name, attribs_map &attri
 		{
 			filename = GlobalAttributes::getSchemaFilePath(GlobalAttributes::SQLSchemaDir, obj_name);
 			attribs[Attributes::PgSqlVersion] = pgsql_version;
+			setFlavorAttributes(attribs);
 		}
 		else
 			filename = GlobalAttributes::getSchemaFilePath(GlobalAttributes::XMLSchemaDir, obj_name);
@@ -1660,6 +1680,7 @@ QString SchemaParser::getSourceCode(const QString &filename, attribs_map &attrib
 	{
 		loadFile(filename);
 		attribs[Attributes::PgSqlVersion]=pgsql_version;
+		setFlavorAttributes(attribs);
 		return getSourceCode(attribs);
 	}
 	catch(Exception &e)
