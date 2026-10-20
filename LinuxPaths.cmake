@@ -28,15 +28,15 @@ if(NOT DEFINED PGM_PRIVATEBINDIR)
 endif()
 
 if(NOT DEFINED PGM_PRIVATELIBDIR)
-    set(PGM_PRIVATELIBDIR ${PGM_PREFIX}/lib/pgmodeler)
+    set(PGM_PRIVATELIBDIR ${PGM_PREFIX}/lib/gpmodeler)
 endif()
 
 if(NOT DEFINED PGM_PLUGINSDIR)
-    set(PGM_PLUGINSDIR ${PGM_PREFIX}/lib/pgmodeler/plugins)
+    set(PGM_PLUGINSDIR ${PGM_PREFIX}/lib/gpmodeler/plugins)
 endif()
 
 if(NOT DEFINED PGM_SHAREDIR)
-    set(PGM_SHAREDIR ${PGM_PREFIX}/share/pgmodeler)
+    set(PGM_SHAREDIR ${PGM_PREFIX}/share/gpmodeler)
 endif()
 
 if(NOT DEFINED PGM_CONFDIR)

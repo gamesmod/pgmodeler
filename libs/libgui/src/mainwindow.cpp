@@ -387,10 +387,10 @@ void MainWindow::handleInitializationFailure(Exception &e)
 		}
 		else
 		{
-			msgbox.show(tr("The default settings were successfully restored! pgModeler will be restarted now so the configuration files can be correctly loaded."),
+			msgbox.show(tr("The default settings were successfully restored! gpModeler will be restarted now so the configuration files can be correctly loaded."),
 									Messagebox::Info);
 
-			// Starting a new instance of pgModeler (detached)
+			// Starting a new instance of gpModeler (detached)
 			proc.setProgram(GlobalAttributes::getPgModelerAppPath());
 			proc.setArguments({});
 			proc.startDetached();
@@ -691,7 +691,7 @@ void MainWindow::restoreTemporaryModels()
 	QStringList ignored_files;
 
 	/* If we have loaded models prior the execution of the restoration form
-	 * (e.g, the user has started pgModeler from a double click on a .dbm file)
+	 * (e.g, the user has started gpModeler from a double click on a .dbm file)
 	 * we just need to ignore their temp files so the restoration form shows just files
 	 * created on a previous session */
 	for(int idx = 0; idx < models_tbw->count(); idx++)
@@ -776,7 +776,7 @@ void MainWindow::showBottomWidgetsBar()
 void MainWindow::restoreLastSession()
 {
 	/* Loading the files from the previous session. The session will be restored only
-	if pgModeler is not on model restore mode or pgModeler is not opening a model clicked by user
+	if gpModeler is not on model restore mode or gpModeler is not opening a model clicked by user
 	o the file manager */
 	if(QApplication::arguments().size() <= 1 &&
 			!prev_session_files.isEmpty() && restoration_form->result()==QDialog::Rejected)
@@ -879,7 +879,7 @@ void MainWindow::showEvent(QShowEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-	/* pgModeler will not close when one of the
+	/* gpModeler will not close when one of the
 	 * threaded operations (validation, import, diff, export)
 	 * is still running */
 	if(model_valid_wgt->isThreadRunning() ||
@@ -917,7 +917,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 			{
 				msg_box.setCustomOptionText(tr("Always close without alerting me next time."));
 				msg_box.show(tr("Unsaved model(s)"),
-										 tr("The following models were modified but not saved: %1. Do you really want to quit pgModeler?").arg(model_names.join(", ")),
+										 tr("The following models were modified but not saved: %1. Do you really want to quit gpModeler?").arg(model_names.join(", ")),
 										 Messagebox::Confirm, Messagebox::YesNoButtons, false);
 
 				conf_wgt->appendConfigurationSection(Attributes::Configuration,
@@ -925,7 +925,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 																								msg_box.isCustomOptionChecked() ? Attributes::False : Attributes::True }});
 
 				/* If the user rejects the message box the close event will be aborted
-				 * causing pgModeler not to be finished */
+				 * causing gpModeler not to be finished */
 				if(msg_box.isRejected())
 					event->ignore();
 			}
@@ -966,7 +966,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 			filename = model->getFilename();
 
 			/* Models loaded from temporary dir are not included in the session
-			 * since they are removed once pgModeler is closed */
+			 * since they are removed once gpModeler is closed */
 			if(filename.isEmpty() || filename.contains(GlobalAttributes::getTemporaryPath()))
 				filename = model->property(ModelWidget::AltFilename).toString();
 

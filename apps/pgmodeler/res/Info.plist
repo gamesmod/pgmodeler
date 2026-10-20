@@ -15,7 +15,7 @@
             <key>CFBundleTypeIconFile</key>
             <string>pgmodeler_dbm.icns</string>
             <key>CFBundleTypeName</key>
-            <string>pgModeler Database Model</string>
+            <string>gpModeler Database Model</string>
            </dict>
        </array>
        <key>CFBundleIconFile</key>
@@ -23,9 +23,9 @@
        <key>CFBundleExecutable</key>
        <string>pgmodeler</string>
        <key>CFBundleDisplayName</key>
-       <string>pgModeler</string>
+       <string>gpModeler</string>
        <key>CFBundleIdentifier</key>
-       <string>io.pgmodeler.pgModeler</string>
+       <string>io.pgmodeler.gpModeler</string>
        <key>CFBundleInfoDictionaryVersion</key>
        <string>1.0</string>
        <key>CFBundlePackageType</key>

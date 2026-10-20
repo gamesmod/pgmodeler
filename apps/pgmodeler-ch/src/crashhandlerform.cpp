@@ -36,7 +36,7 @@ CrashHandlerForm::CrashHandlerForm(bool analysis_mode, QWidget *parent, Qt::Wind
 	CustomUiStyle::setStyleHint(CustomUiStyle::InfoFrmHint, hint_frm);
 	QHBoxLayout *layout = GuiUtilsNs::createHBoxLayout(GuiUtilsNs::LtMargin);
 
-	setWindowTitle(tr("pgModeler crash handler"));
+	setWindowTitle(tr("gpModeler crash handler"));
 	setWindowIcon(QPixmap(":/images/images/crashhandler.png"));
 
 	stack_txt=new QPlainTextEdit(this);
@@ -80,7 +80,7 @@ CrashHandlerForm::CrashHandlerForm(bool analysis_mode, QWidget *parent, Qt::Wind
 	input_sel->setFileDialogTitle(tr("Select bug report file"));
 	input_sel->setPathMustExist(true);
 	input_sel->setAcceptMode(QFileDialog::AcceptOpen);
-	input_sel->setNameFilters({ tr("pgModeler bug report (*.bug)"), tr("All files (*.*)") });
+	input_sel->setNameFilters({ tr("gpModeler bug report (*.bug)"), tr("All files (*.*)") });
 	input_sel->setToolTip(tr("Load report file for analysis"));
 	layout->addWidget(input_sel);
 
@@ -198,12 +198,12 @@ void CrashHandlerForm::setAnalysisMode(bool value)
 
 	if(value)
 	{
-		title_lbl->setText(tr("pgModeler crash handler"));
+		title_lbl->setText(tr("gpModeler crash handler"));
 		msg_lbl->setText(tr("Bug report analysis mode activated."));
 	}
 	else
 	{
-		title_lbl->setText(tr("Oh no! pgModeler just crashed!"));
+		title_lbl->setText(tr("Oh no! gpModeler just crashed!"));
 		msg_lbl->setText(tr("We apologize for what happened! It is clear that a nasty bug caused that. Please, fill out the form below describing your actions that somehow caused the unexpected closing. This will help us to investigate the causes and provide the proper fix for the problem."));
 	}
 }

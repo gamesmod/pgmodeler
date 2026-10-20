@@ -32,7 +32,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>About pgModeler Schema Editor</string>
+   <string>About gpModeler Schema Editor</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../../libs/libgui/res/resources.qrc">
@@ -141,7 +141,7 @@
            </font>
           </property>
           <property name="text">
-           <string>pgModeler Schema Editor</string>
+           <string>gpModeler Schema Editor</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -291,7 +291,7 @@
          <enum>QFrame::NoFrame</enum>
         </property>
         <property name="text">
-         <string>Create, edit and verify the syntax of files written in pgModeler's schema micro-language. You can also tweak the tool's syntax highlighting settings to be used by the main GUI application.</string>
+         <string>Create, edit and verify the syntax of files written in gpModeler's schema micro-language. You can also tweak the tool's syntax highlighting settings to be used by the main GUI application.</string>
         </property>
         <property name="textFormat">
          <enum>Qt::PlainText</enum>
@@ -380,7 +380,7 @@ p, li { white-space: pre-wrap; }
            </size>
           </property>
           <property name="toolTip">
-           <string>pgModeler is proudly a Brazilian software!</string>
+           <string>gpModeler is proudly a Brazilian software!</string>
           </property>
           <property name="styleSheet">
            <string notr="true"/>

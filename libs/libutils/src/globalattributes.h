@@ -37,11 +37,11 @@
 
 class __libutils GlobalAttributes {
 	private:
-		/*! \brief Environment variables used to reference the pgModeler directories.
+		/*! \brief Environment variables used to reference the gpModeler directories.
 		 * These environment variables can be referenced in code using Env*Path constants.
 
 		 PGMODELER_SCHEMAS_PATH   --> full path to the "schemas" folder  (SQL/XML generation schema files)
-		 PGMODELER_CONF_PATH      --> full path to the "conf" folder    (user's own settings for pgModeler)
+		 PGMODELER_CONF_PATH      --> full path to the "conf" folder    (user's own settings for gpModeler)
 		 PGMODELER_TMPL_CONF_PATH --> full path to the "conf" folder    (used as template settings and copied to user's settings)
 		 PGMODELER_LANG_PATH      --> full path to the "lang" folder    (ui translations)
 		 PGMODELER_PLUGINS_PATH   --> full path to the "plugins" folder (where plugins are installed)
@@ -99,7 +99,7 @@ class __libutils GlobalAttributes {
 		static void setSearchPath(const QString &search_path);
 
 		/*! \brief Returns the path to a file that is under a root path. Generally the root path is the full path to a folder that
-		 * stores assets related to pgModeler (config files, schema files, etc) in its installation root.
+		 * stores assets related to gpModeler (config files, schema files, etc) in its installation root.
 		 *
 		 * The parameter file_ext is the file extension that is appended to the requested file. This is a convenience parameter,
 		 * to avoid writting the extension in the last parameter of the parameter pack pth_elems.
@@ -169,7 +169,7 @@ class __libutils GlobalAttributes {
 		EnvPgModelerSePath,
 		EnvPgModelerPath,
 
-		PgmPathsConfFile, //! \brief An ini-like (key=value) file that holds custom values for the pgModeler's enviroment variables
+		PgmPathsConfFile, //! \brief An ini-like (key=value) file that holds custom values for the gpModeler's enviroment variables
 		BugReportEmail,
 		BugReportFile,
 		StacktraceFile,
@@ -179,10 +179,10 @@ class __libutils GlobalAttributes {
 		DbModelBkpExt,
 		ObjMetadataExt,
 		DirSeparator,
-		ResourcesDir,				 //! \brief Directory name which holds the pgModeler's plug-ins resources directory (res)
+		ResourcesDir,				 //! \brief Directory name which holds the gpModeler's plug-ins resources directory (res)
 		ConfigurationsDir,	 //! \brief Default name for the configurations directory
 		DefaultConfsDir,		 //! \brief Default name for the default configurations directory
-		ConfsBackupsDir,		 //! \brief Directory name which holds the pgModeler configuration backups
+		ConfsBackupsDir,		 //! \brief Directory name which holds the gpModeler configuration backups
 		SchemasDir,					 //! \brief Default name for the schemas directory
 		SQLSchemaDir,				 //! \brief Default name for the sql schemas directory
 		XMLSchemaDir,				 //! \brief Default name for the xml schemas directory
@@ -205,7 +205,7 @@ class __libutils GlobalAttributes {
 
 		CodeHighlightConf,		 //! \brief Default name for the language highlight dtd
 		AppearanceConf,				 //! \brief Default name for the appearance configuration file
-		GeneralConf,					 //! \brief Default name for the general pgModeler configuration
+		GeneralConf,					 //! \brief Default name for the general gpModeler configuration
 		ConnectionsConf,			 //! \brief Default name for the DBMS connection configuration file
 		RelationshipsConf,		 //! \brief Default name for the relationships configuration file
 		SnippetsConf,					 //! \brief Default name for the code snippets configuration file
@@ -226,7 +226,7 @@ class __libutils GlobalAttributes {
 
 		FileDialogConf, //! \brief Default name for the file used to save/restore QFileDialog last geometry
 
-		/*! \brief Fusion is the default widget style for pgModeler. User can change this by calling
+		/*! \brief Fusion is the default widget style for gpModeler. User can change this by calling
 		the executable using -style option. This same style is applied to crash handler. */
 		DefaultQtStyle,
 		UiStyleOption;
@@ -273,10 +273,10 @@ class __libutils GlobalAttributes {
 		//! \brief Returns the path to a temp file under "tmp" folder at user's local storage
 		static QString getTemporaryFilePath(const QString &file);
 
-		//! \brief Returns the path to the template "conf" folder in pgModeler's installation
+		//! \brief Returns the path to the template "conf" folder in gpModeler's installation
 		static QString getTmplConfigurationPath();
 
-		/*! \brief Returns the path to the template file at template "conf" folder in pgModeler's installation
+		/*! \brief Returns the path to the template file at template "conf" folder in gpModeler's installation
 		 * This method will not append any extension to the file since this folder has several kinds of
 		 * files inside it, so, the user must inform the file with its extension */
 		template<typename ...args>
@@ -292,13 +292,13 @@ class __libutils GlobalAttributes {
 		 * There's no need to specify the extension (.conf) since the method will automatically append it. */
 		static QString getConfigurationFilePath(const QString &file);
 
-		//! \brief Returns the path to the "samples" folder in pgModeler's installation
+		//! \brief Returns the path to the "samples" folder in gpModeler's installation
 		static QString getSamplesPath();
 
-		//! \brief Returns the path to the "lang" folder in pgModeler's installation
+		//! \brief Returns the path to the "lang" folder in gpModeler's installation
 		static QString getLanguagesPath();
 
-		//! \brief Returns the path to the "plugins" folder in pgModeler's installation
+		//! \brief Returns the path to the "plugins" folder in gpModeler's installation
 		static QString getPluginsPath();
 
 		//! \brief Returns the path to the "sql-highlight.conf" file in user's local storage

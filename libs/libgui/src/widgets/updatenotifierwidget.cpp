@@ -95,7 +95,7 @@ void UpdateNotifierWidget::checkForUpdate()
 	QUrl url(GlobalAttributes::PgModelerUpdateCheckURL.arg(GlobalAttributes::PgModelerVersion, check_versions));
 	QNetworkRequest req(url);
 
-	req.setRawHeader("User-Agent", "pgModelerUpdateCheck");
+	req.setRawHeader("User-Agent", "gpModelerUpdateCheck");
 	show_no_upd_msg=(dynamic_cast<QAction *>(sender())!=nullptr);
 	update_chk_reply=update_chk_manager.get(req);
 }
@@ -150,7 +150,7 @@ void UpdateNotifierWidget::handleUpdateChecked(QNetworkReply *reply)
 				else if(show_no_upd_msg)
 				{
 					msg_box.show(tr("No updates found"),
-											 tr("You are running the most recent pgModeler version! No update needed."),
+											 tr("You are running the most recent gpModeler version! No update needed."),
 											 Messagebox::Info, Messagebox::OkButton, false);
 				}
 

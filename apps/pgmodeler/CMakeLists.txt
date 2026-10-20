@@ -1,4 +1,4 @@
-pgm_add_executable(pgmodeler
+pgm_add_executable(gpmodeler
     src/main.cpp
     src/pgmodelerapp.cpp src/pgmodelerapp.h)
 

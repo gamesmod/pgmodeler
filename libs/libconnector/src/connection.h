@@ -179,7 +179,7 @@ class __libconnector Connection {
 		/*! \brief Ignores the PostgreSQL version checking during connection.
 		 *  When false (the default behavior), when connecting to a server which version is < 10, an error
 		 *  is raised. When true, the error is not raised, but the overall usage of the tool may be affected
-		 *  since pgModeler is strictly tied to newer version. */
+		 *  since gpModeler is strictly tied to newer version. */
 		static void setIgnoreDbVersion(bool ignore);
 
 		//! \brief Indicates if the database version is ignored in the connection

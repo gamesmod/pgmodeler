@@ -20,7 +20,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>pgModeler settings</string>
+   <string>gpModeler settings</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../../../priv-core/res/logoicons.qrc">

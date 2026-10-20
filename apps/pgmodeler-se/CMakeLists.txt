@@ -3,7 +3,7 @@
 # command to look for .ui files under ui/*
 set(CMAKE_AUTOUIC_SEARCH_PATHS ui)
 
-pgm_add_executable(pgmodeler-se
+pgm_add_executable(gpmodeler-se
     src/aboutsewidget.cpp src/aboutsewidget.h
     src/main.cpp
     src/schemaeditorform.cpp src/schemaeditorform.h

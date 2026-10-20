@@ -86,7 +86,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Do more with pgModeler Plus!</string>
+         <string>Do more with gpModeler Plus!</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>

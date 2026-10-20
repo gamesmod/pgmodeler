@@ -1,4 +1,4 @@
-pgm_add_executable(pgmodeler-ch
+pgm_add_executable(gpmodeler-ch
     src/crashhandlerform.cpp src/crashhandlerform.h
     src/main.cpp)
 

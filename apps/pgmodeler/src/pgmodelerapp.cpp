@@ -44,7 +44,7 @@ PgModelerApp::PgModelerApp(int &argc, char **argv) : Application(argc,argv)
 	//Adding paths which executable will find plugins and it's dependecies
 	this->addLibraryPath(this->applicationDirPath());
 
-	//If pgModeler bundles plugins, add the root plugins path to lib search paths
+	//If gpModeler bundles plugins, add the root plugins path to lib search paths
 	if(dir.exists(GlobalAttributes::getPluginsPath()))
 		this->addLibraryPath(GlobalAttributes::getPluginsPath());
 

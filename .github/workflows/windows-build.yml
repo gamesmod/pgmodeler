@@ -34,7 +34,7 @@ jobs:
       - name: Configure
         run: |
           cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
-            -DPGM_PREFIX="$PWD/dist/pgmodeler"
+            -DPGM_PREFIX="$PWD/dist/gpmodeler"
 
       - name: Build
         run: cmake --build build --parallel
@@ -44,16 +44,38 @@ jobs:
 
       - name: Deploy Qt and runtime DLLs
         run: |
-          cd dist/pgmodeler
-          windeployqt6 --no-translations --no-system-d3d-compiler --no-opengl-sw pgmodeler.exe
-          for exe in *.exe; do
-            ldd "$exe" | grep -i '/mingw64/' | awk '{print $3}' | xargs -I{} cp -n {} . || true
+          cd dist/gpmodeler
+          windeployqt6 --no-translations --no-system-d3d-compiler --no-opengl-sw gpmodeler.exe
+
+      # libpq is the only database driver gpModeler uses (Greenplum and Cloudberry speak
+      # the PostgreSQL protocol). It is bundled explicitly, together with the whole
+      # transitive set of its runtime dependencies (OpenSSL, libintl, ICU, ...)
+      - name: Bundle libpq and dependencies
+        run: |
+          cd dist/gpmodeler
+          cp "$MSYSTEM_PREFIX/bin/libpq.dll" .
+          for pass in 1 2 3 4 5; do
+            for f in *.exe *.dll; do
+              ldd "$f" | grep -i '/mingw64/' | awk '{print $3}' | xargs -r -I{} cp -n {} .
+            done
           done
-          for dll in lib*.dll; do
-            ldd "$dll" | grep -i '/mingw64/' | awk '{print $3}' | xargs -I{} cp -n {} . || true
+
+      - name: Verify the bundle is self-contained
+        run: |
+          cd dist/gpmodeler
+          test -f libpq.dll
+          missing=0
+          # Resolving with a PATH limited to the Windows system dirs, so DLLs that are
+          # only found in the MSYS2 tree (and would be missing on a clean machine) show up
+          for f in *.exe *.dll platforms/*.dll; do
+            if env PATH=/c/Windows/system32:/c/Windows /usr/bin/ldd "$f" 2>/dev/null | grep -i "not found"; then
+              echo "::error::unresolved dependency in $f"
+              missing=1
+            fi
           done
+          exit $missing
 
       - uses: actions/upload-artifact@v4
         with:
-          name: pgmodeler-win64
-          path: dist/pgmodeler
+          name: gpmodeler-win64
+          path: dist/gpmodeler

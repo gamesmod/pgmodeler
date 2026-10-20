@@ -35,7 +35,7 @@
    <bool>false</bool>
   </property>
   <property name="windowTitle">
-   <string>About pgModeler</string>
+   <string>About gpModeler</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../../../priv-core/res/logoicons.qrc">
@@ -541,7 +541,7 @@
             <enum>QFrame::Shape::NoFrame</enum>
            </property>
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;PostgreSQL Database Modeler &lt;/span&gt;is an open-source, cross-platform database modeling tool tailored specifically for PostgreSQL. It integrates traditional entity–relationship modeling with PostgreSQL-specific features implemented as extensions to the SQL standard. The project aims to serve as a reference database design tool within the PostgreSQL FOSS ecosystem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;gpModeler &lt;/span&gt;is an open-source, cross-platform database modeling tool for Greenplum and Apache Cloudberry (and PostgreSQL), based on pgModeler. It integrates traditional entity–relationship modeling with PostgreSQL-specific features implemented as extensions to the SQL standard. The project aims to serve as a reference database design tool within the PostgreSQL FOSS ecosystem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="textFormat">
             <enum>Qt::TextFormat::AutoText</enum>
@@ -676,7 +676,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Proudly a Brazilian software developed by &lt;br/&gt;**Nullptr Labs Software e Tecnologia LTDA**</string>
+           <string>Based on pgModeler by &lt;br/&gt;**Nullptr Labs Software e Tecnologia LTDA**</string>
           </property>
           <property name="textFormat">
            <enum>Qt::TextFormat::MarkdownText</enum>

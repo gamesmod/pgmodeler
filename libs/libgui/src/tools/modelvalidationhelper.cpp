@@ -351,7 +351,7 @@ void ModelValidationHelper::validateModel()
 		checkInvalidatedRels();
 
 		/*Step 5: Checking constraint semantics. The first one is if unique constraints on tables reference
-		 * the same columns as the primary keys. In this, pgModeler emits an alert instead of a validation
+		 * the same columns as the primary keys. In this, gpModeler emits an alert instead of a validation
 		 * error this because PostgreSQL will ignore the unique constraint having the mentioned configuration
 		 * but without warn the user.
 		 *
@@ -429,7 +429,7 @@ void ModelValidationHelper::checkObjectBrokenRefs(BaseObject *object)
 
 		/* Ignoring system objects that somehow references the object
 		 * An example is a schema created by an extension, in this case,
-		 * since the schema is created by pgModeler there is no need
+		 * since the schema is created by gpModeler there is no need
 		 * to check for broken reference */
 		if(obj->isSystemObject() && obj->getObjectType() != ObjectType::Type)
 			continue;

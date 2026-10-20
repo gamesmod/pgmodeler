@@ -1509,7 +1509,7 @@ void RelationshipView::configureCrowsFootDescriptors()
 
 			/* There's a special case for one-to-one relationships that will cause the crow's foot
 			 * descriptors to be positioned in the oposite sides when compared to other relationships.
-			 * This because pgModeler switches automatically the receiver table to be the destination one
+			 * This because gpModeler switches automatically the receiver table to be the destination one
 			 * when the mandatory table of the relationship is the destination. So we use and auxiliary (signal inverter)
 			 * variable to alter the descriptors position */
 			if(mandatory[BaseRelationship::SrcTable] && rel_type == BaseRelationship::Relationship11 &&

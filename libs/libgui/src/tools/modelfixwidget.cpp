@@ -26,9 +26,9 @@
 
 const QString ModelFixWidget::PgModelerCli {
 #ifdef Q_OS_WIN
-	"pgmodeler-cli.exe"
+	"gpmodeler-cli.exe"
 #else
-	"pgmodeler-cli"
+	"gpmodeler-cli"
 #endif
 };
 
@@ -65,10 +65,10 @@ ModelFixWidget::ModelFixWidget(QWidget *parent) : QWidget(parent)
 	pgmodeler_cli_sel = new PathSelectorWidget(this);
 	pgmodeler_cli_sel->setObjectName("pgmodeler_cli_sel");
 	pgmodeler_cli_sel->setPathMustExist(true);
-	pgmodeler_cli_sel->setNameFilters({tr("pgModeler command line tool (%1)").arg(PgModelerCli)});
+	pgmodeler_cli_sel->setNameFilters({tr("gpModeler command line tool (%1)").arg(PgModelerCli)});
 	pgmodeler_cli_sel->setAcceptMode(QFileDialog::AcceptOpen);
 	pgmodeler_cli_sel->setAllowPathInput(true);
-	pgmodeler_cli_sel->setWindowTitle(tr("Select pgmodeler-cli executable"));
+	pgmodeler_cli_sel->setWindowTitle(tr("Select gpmodeler-cli executable"));
 	pgmodeler_cli_sel->setVisible(false);
 	pgmodeler_cli_sel->setCheckExecutionFlag(true);
 	pgmodeler_cli_sel->setPathIsMandatory(true);

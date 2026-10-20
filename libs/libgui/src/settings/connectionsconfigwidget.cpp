@@ -510,7 +510,7 @@ void ConnectionsConfigWidget::saveConfiguration()
 
 		/* If add or update buttons are enabled when saving the configs indicates
 	   that user forgot to click on these buttons and register the connection,
-	   so in order to do not lost the data pgModeler will ask to save the connection. */
+	   so in order to do not lost the data gpModeler will ask to save the connection. */
 		if(add_tb->isEnabled() || update_tb->isEnabled())
 		{
 			if(!one_time_conn_edit)

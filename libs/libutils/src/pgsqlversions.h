@@ -54,7 +54,7 @@ namespace PgSqlVersions {
 		PgSqlVersion120, PgSqlVersion110, PgSqlVersion100
 	};
 
-	/*! \brief Server flavors. Besides vanilla PostgreSQL, pgModeler can generate code
+	/*! \brief Server flavors. Besides vanilla PostgreSQL, gpModeler can generate code
 	 * for MPP engines derived from it. Each flavor is mapped to the version of PostgreSQL
 	 * it is based on, which is the one used to select version dependent syntax */
 	inline const QString

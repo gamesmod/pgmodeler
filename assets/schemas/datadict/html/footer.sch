@@ -4,7 +4,7 @@
 
 \n <footer> \n
 
-[ Generated at <em> ] {date} [ </em> by <strong>pgModeler ] {version} [ </strong><br/>
+[ Generated at <em> ] {date} [ </em> by <strong>gpModeler ] {version} [ </strong><br/>
 <a href="https://pgmodeler.io">PostgreSQL Database Modeler - https://pgmodeler.io</a><br/>
 Copyright © 2006 - ] {year} [ Raphael Araújo e Silva ] \n
 

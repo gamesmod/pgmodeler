@@ -22,7 +22,7 @@
 /**
 \ingroup libgui
 \class MainWindow
-\brief Implements the pgModeler main window. Reuniting all the resources implemented by the libraries.
+\brief Implements the gpModeler main window. Reuniting all the resources implemented by the libraries.
 */
 
 #ifndef MAIN_WINDOW_H
@@ -121,7 +121,7 @@ class __libgui MainWindow: public QMainWindow, public Ui::MainWindow {
 		//! \brief Model validation widget
 		ModelValidationWidget *model_valid_wgt;
 
-		//! \brief pgModeler configuration widget
+		//! \brief gpModeler configuration widget
 		ConfigurationWidget *configuration_wgt;
 
 		//! \brief Model export widget
@@ -225,7 +225,7 @@ class __libgui MainWindow: public QMainWindow, public Ui::MainWindow {
 
 		void dropEvent(QDropEvent *event) override;
 
-		/*! \brief Tries to restore the default configuration files and restart pgModeler
+		/*! \brief Tries to restore the default configuration files and restart gpModeler
 		 *  in case of any configuration file is broken or missing */
 		void handleInitializationFailure(Exception &e);
 
@@ -380,7 +380,7 @@ class __libgui MainWindow: public QMainWindow, public Ui::MainWindow {
 		//! \brief Save the temp files for all opened models
 		void saveTemporaryModels();
 
-		//! \brief Opens the pgModeler Wiki in a web browser window
+		//! \brief Opens the gpModeler Wiki in a web browser window
 		void openSupport();
 
 		//! \brief Executes one of the pending operations (save, export, diff) after validate the model

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(pgmodeler VERSION 2.0 LANGUAGES C CXX)
+project(gpmodeler VERSION 2.0 LANGUAGES C CXX)
 
 # Defining where cmake can find the .cmake modules
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR})

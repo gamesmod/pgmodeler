@@ -101,7 +101,7 @@ class __libcore BaseObject {
 
 		/*! \brief This attribute when true disables the automatic object name quoting.
 		 *  WARNING: Disabling the name quoting is is an EXPERIMENTAL feature which can lead
-		 *  to braking models that was created in previous version of pgModeler.
+		 *  to braking models that was created in previous version of gpModeler.
 		 *
 		 *  Basically this will ignore object name cases, treating things like table_a, Table_A and TABLE_A
 		 *  as being the same object. There are also a huge impact in reverese engineering and diff features
@@ -560,7 +560,7 @@ class __libcore BaseObject {
 		static bool acceptsCustomSQL(ObjectType obj_type);
 
 		/*! \brief Returns if the specified type accepts the use of ALTER commands in order to change their attributes
-		This is different from PostgreSQL implementation. In pgModeler, an object accepts ALTER when an attribute
+		This is different from PostgreSQL implementation. In gpModeler, an object accepts ALTER when an attribute
 		other than name, schema or owner can be changed. */
 		static bool acceptsAlterCommand(ObjectType obj_type);
 
@@ -679,7 +679,7 @@ class __libcore BaseObject {
 		/*! \brief Ignores the PostgreSQL version checking during code generation.
 		 *  When false (the default behavior), when generating code which db version is < 10, an error
 		 *  is raised. When true, the error is not raised, but the overall usage of the tool may be affected
-		 *  since pgModeler is strictly tied to newer version. */
+		 *  since gpModeler is strictly tied to newer version. */
 		static void setIgnoreDbVersion(bool ignore);
 
 		//! \brief Indicates if the database version is ignored in the code generation

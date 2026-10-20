@@ -133,11 +133,11 @@ const QString PgModelerCliApp::ModelFixLog {"model_fix.log"};
 const QString PgModelerCliApp::MenuItemOptTmpl { "  %1, %2" };
 
 const QString PgModelerCliApp::MsgFileAssociated {
-	QString(QT_TR_NOOP("Database model files (*%1) are already associated with pgModeler! Use the option `%2' to force the file association installation.")).arg(GlobalAttributes::DbModelExt, Force)
+	QString(QT_TR_NOOP("Database model files (*%1) are already associated with gpModeler! Use the option `%2' to force the file association installation.")).arg(GlobalAttributes::DbModelExt, Force)
 };
 
 const QString PgModelerCliApp::MsgNoFileAssociation {
-	QString(QT_TR_NOOP("No file association exists between pgModeler and *%1 files! Use the option `%2' to force the file association uninstallation.")).arg(GlobalAttributes::DbModelExt, Force)
+	QString(QT_TR_NOOP("No file association exists between gpModeler and *%1 files! Use the option `%2' to force the file association uninstallation.")).arg(GlobalAttributes::DbModelExt, Force)
 };
 
 std::map<QString, bool> PgModelerCliApp::long_opts {
@@ -489,12 +489,12 @@ void PgModelerCliApp::showVersionInfo(bool only_ver_num)
 
 	if(only_ver_num)
 	{
-		printMessage(QString("pgmodeler-cli %1 %2").arg(GlobalAttributes::PgModelerVersion, GlobalAttributes::PgModelerBuildNumber));
+		printMessage(QString("gpmodeler-cli %1 %2").arg(GlobalAttributes::PgModelerVersion, GlobalAttributes::PgModelerBuildNumber));
 		printMessage();
 		return;
 	}
 
-	printMessage(tr("pgModeler %1 command line interface.").arg(
+	printMessage(tr("gpModeler %1 command line interface.").arg(
 							 #ifdef PRIV_CODE_SYMBOLS
 								"Plus"
 							#else
@@ -643,7 +643,7 @@ void PgModelerCliApp::showMenu()
 
 	printText(tr("This tool provides a command-line interface for the main operations\navailable in GUI. All available options are described below."));
 	printText();
-	printText(tr("Usage: pgmodeler-cli [OPTIONS]"));
+	printText(tr("Usage: gpmodeler-cli [OPTIONS]"));
 	printText();
 
 	// List of all menu options
@@ -664,10 +664,10 @@ void PgModelerCliApp::showMenu()
 
 	menu_items.append(MenuItem(ListConns, "", tr("Lists the available connections. File location: %1.").arg(GlobalAttributes::ConnectionsConf + GlobalAttributes::ConfigurationExt)));
 	menu_items.append(MenuItem(FixModel, "", tr("Tries to fix the structure of the input model file to make it loadable again.")));
-	menu_items.append(MenuItem(CreateConfigs, "", tr("Creates pgModeler's configuration folder and files. Stored in the user's local storage.")));
+	menu_items.append(MenuItem(CreateConfigs, "", tr("Creates gpModeler's configuration folder and files. Stored in the user's local storage.")));
 	
 	#ifndef Q_OS_MACOS
-		menu_items.append(MenuItem(DbmMimeType, "[ACTION]", tr("Handles the DBM file association to pgModeler binaries. Available actions: [%1 | %2].").arg(Install, Uninstall)));
+		menu_items.append(MenuItem(DbmMimeType, "[ACTION]", tr("Handles the DBM file association to gpModeler binaries. Available actions: [%1 | %2].").arg(Install, Uninstall)));
 	#endif
 	
 	menu_items.append(MenuItem(Help, "", tr("Shows this help menu.")));
@@ -897,7 +897,7 @@ void PgModelerCliApp::showMenu()
 		printText();
 		printText("**");
 		printText(tr("** WARNING: Unable to retrieve plugin options due to errors!"));
-		printText(tr("**          Execute pgmodeler-cli with `%1' for detailed error information.").arg(ListPlugins));
+		printText(tr("**          Execute gpmodeler-cli with `%1' for detailed error information.").arg(ListPlugins));
 		printText("**");
 		printText();
 	}
@@ -1334,7 +1334,7 @@ void PgModelerCliApp::extractObjectXML()
 	printMessage(tr("Extracting object XML definitions..."));
 	buf.append(UtilsNs::loadFile(parsed_opts[Input]));
 
-	// Extracting pgModeler version from input model
+	// Extracting gpModeler version from input model
 	QRegularExpression ver_expr(AttributeExpr.arg(Attributes::PgModelerVersion));
 	QRegularExpressionMatch match;
 	static QRegularExpression val_delim_rx {"(\\\"|\\=| )+" },
@@ -1350,7 +1350,7 @@ void PgModelerCliApp::extractObjectXML()
 
 	if(!model_version.contains(version_num_rx))
 	{
-		printMessage(tr("** WARNING: Unable to determine the pgModeler version used to create the input model!"));
+		printMessage(tr("** WARNING: Unable to determine the gpModeler version used to create the input model!"));
 		printMessage(tr("            Some fix actions that depend on the model version will not be applied!"));
 		model_version.clear();
 	}
@@ -1372,7 +1372,7 @@ void PgModelerCliApp::extractObjectXML()
 	start = header_match.capturedStart();
 
 	if(start < 0)
-		throw Exception(tr("Invalid input file! The file does not appear to be a pgModeler-generated model or is corrupted!"), ErrorCode::Custom,PGM_FUNC,PGM_FILE,PGM_LINE);
+		throw Exception(tr("Invalid input file! The file does not appear to be a gpModeler-generated model or is corrupted!"), ErrorCode::Custom,PGM_FUNC,PGM_FILE,PGM_LINE);
 
 	//Extracting layers informations from the tag <dbmodel>
 	static QRegularExpression dbm_regexp { TagExpr.arg(Attributes::DbModel) },
@@ -1942,8 +1942,8 @@ void PgModelerCliApp::fixObjectAttributes(QString &obj_xml)
 		// Fixing the enumeration type labels
 		if(!model_version.isEmpty() && model_version <= "0.9.4-beta1")
 		{
-			/* Until pgModeler 0.9.3, enum labels separators where commas.
-			 * In pgModeler 0.9.4, enum labels separators where UtilsNs::DataSeparator */
+			/* Until gpModeler 0.9.3, enum labels separators where commas.
+			 * In gpModeler 0.9.4, enum labels separators where UtilsNs::DataSeparator */
 			QString sep = (model_version == "0.9.4-beta1" ? UtilsNs::DataSeparator : ","),
 					values, labels;
 			static QRegularExpression enum_start_expr("(" + TagExpr.arg(Attributes::EnumType) + ")( )*(values)( )*(=)( )*(\\\")"),
@@ -2021,7 +2021,7 @@ void PgModelerCliApp::fixObjectAttributes(QString &obj_xml)
 
 		match = regexp.match(obj_xml);
 
-		/* In pgModeler 0.8.2, there wasn't the constraint attribute in domains
+		/* In gpModeler 0.8.2, there wasn't the constraint attribute in domains
 		 * so we just create a name for it based on the domain's name */
 		if(!match.hasMatch())
 		{
@@ -2450,9 +2450,9 @@ void PgModelerCliApp::handleLinuxMimeDatabase(bool uninstall, bool system_wide, 
 			//Path to the file that associates apps to mimetypes
 			mimeapps=QString("%1/applications/mimeapps.list").arg(share_path);
 
-		//Files generated after update file association (application-dbm.xml and pgModeler.desktop)
-		QStringList	files = { QString("%1/applications/pgModeler.desktop").arg(share_path),
-													QString("%1/applications/pgModelerSchEditor.desktop").arg(share_path),
+		//Files generated after update file association (application-dbm.xml and gpModeler.desktop)
+		QStringList	files = { QString("%1/applications/gpModeler.desktop").arg(share_path),
+													QString("%1/applications/gpModelerSchEditor.desktop").arg(share_path),
 													mime_db_dir + "/packages/application-dbm.xml",
 													mime_db_dir + "/packages/application-sch.xml"},
 
@@ -2514,10 +2514,10 @@ void PgModelerCliApp::handleLinuxMimeDatabase(bool uninstall, bool system_wide, 
 		if(!uninstall && !QFileInfo::exists(mimeapps) &&
 			 out.open(QFile::WriteOnly))
 		{
-			out.write(QByteArray("[Added Associations]\napplication/dbm=pgModeler.desktop;\n"));
-			out.write(QByteArray("\n[Default Applications]\napplication/dbm=pgModeler.desktop;\n"));
-			out.write(QByteArray("\n[Added Associations]\napplication/sch=pgModelerStxEditor.desktop;\n"));
-			out.write(QByteArray("\n[Default Applications]\napplication/sch=pgModelerStxEditor.desktop;\n"));			
+			out.write(QByteArray("[Added Associations]\napplication/dbm=gpModeler.desktop;\n"));
+			out.write(QByteArray("\n[Default Applications]\napplication/dbm=gpModeler.desktop;\n"));
+			out.write(QByteArray("\n[Added Associations]\napplication/sch=gpModelerStxEditor.desktop;\n"));
+			out.write(QByteArray("\n[Default Applications]\napplication/sch=gpModelerStxEditor.desktop;\n"));			
 			out.close();
 		}
 		else
@@ -2528,7 +2528,7 @@ void PgModelerCliApp::handleLinuxMimeDatabase(bool uninstall, bool system_wide, 
 												ErrorCode::FileDirectoryNotWritten,PGM_FUNC,PGM_FILE,PGM_LINE);
 			}
 
-			//Opens the mimeapps.list to add a entry linking pgModeler to .dbm files
+			//Opens the mimeapps.list to add a entry linking gpModeler to .dbm files
 			buf = out.readAll();
 			out.close();
 
@@ -2546,7 +2546,7 @@ void PgModelerCliApp::handleLinuxMimeDatabase(bool uninstall, bool system_wide, 
 					//Updates the application/dbm mime association
 					if(!uninstall && (str_aux.contains("[Added Associations]") ||
 										str_aux.contains("[Default Applications]")))
-						str_aux.append("\napplication/dbm=pgModeler.desktop;\n");
+						str_aux.append("\napplication/dbm=gpModeler.desktop;\n");
 					else
 						str_aux+="\n";
 
@@ -2615,11 +2615,11 @@ void PgModelerCliApp::handleWindowsMimeDatabase(bool uninstall, bool system_wide
 
 	//Other registry keys values
 	std::map<QString, QStringList> confs = {
-				{ QString("\\%1\\Classes\\dbm_auto_file").arg(base_reg_key), { "FriendlyTypeName" , "pgModeler Database Model" } },
+				{ QString("\\%1\\Classes\\dbm_auto_file").arg(base_reg_key), { "FriendlyTypeName" , "gpModeler Database Model" } },
 				{ QString("\\%1\\Classes\\dbm_auto_file\\DefaultIcon").arg(base_reg_key), { "Default" , QString("%1,1").arg(exe_path) } },
 				{ QString("\\%1\\Classes\\dbm_auto_file\\shell\\open\\command").arg(base_reg_key), { "Default", QString("\"%1\" \"%2\"").arg(exe_path, "%1") } },
 				{ QString("\\%1\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\%2").arg(base_reg_key, GlobalAttributes::DbModelExt), { "OpenWithList/a", "pgmodeler.exe", "OpenWithList/MRUList", "a"} },
-				{ QString("\\%1\\Classes\\sch_auto_file").arg(base_reg_key), { "FriendlyTypeName" , "pgModeler Schema File" } },
+				{ QString("\\%1\\Classes\\sch_auto_file").arg(base_reg_key), { "FriendlyTypeName" , "gpModeler Schema File" } },
 				{ QString("\\%1\\Classes\\sch_auto_file\\DefaultIcon").arg(base_reg_key), { "Default" , QString("%1,1").arg(sc_exe_path) } },
 				{ QString("\\%1\\Classes\\sch_auto_file\\shell\\open\\command").arg(base_reg_key), { "Default" , QString("\"%1\" \"%2\"").arg(sc_exe_path, "%1") } },
 				{ QString("\\%1\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.sch").arg(base_reg_key), { "OpenWithList/a", "pgmodeler-sc.exe", "OpenWithList/MRUList", "a"} }
@@ -2743,7 +2743,7 @@ void PgModelerCliApp::loadPlugins()
 			if(!isPluginOptsValid(plugin))
 			{
 				errors.push_back(Exception(Exception::getErrorMessage(ErrorCode::PluginNotLoaded)
-																	 .arg(plugin_name, lib, tr("The plugin contains a list of options that are malformed or conflict with pgmodeler-cli default options!")),
+																	 .arg(plugin_name, lib, tr("The plugin contains a list of options that are malformed or conflict with gpmodeler-cli default options!")),
 																	 ErrorCode::PluginNotLoaded, PGM_FUNC,PGM_FILE,PGM_LINE,
 																	 nullptr, tr("Plugin ID: %1").arg(plugin_name)));
 			}

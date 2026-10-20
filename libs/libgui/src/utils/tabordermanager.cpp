@@ -82,7 +82,7 @@ void TabOrderManager::configureTabOrder()
 					 !wgt->isVisible() ||
 					 wgt->objectName().startsWith("qt_") ||
 					 wgt->objectName().isEmpty() ||
-					 /* Special case for pgModeler's container widget
+					 /* Special case for gpModeler's container widget
 						* When not specified, the widget name is the same as the
 						* class name. This is enough to exclude the widget since
 						* their children were collected earlier */

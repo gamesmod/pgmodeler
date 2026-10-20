@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>pgModeler Schema Editor</string>
+   <string>gpModeler Schema Editor</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../../libs/libgui/res/resources.qrc">
@@ -313,7 +313,7 @@
           </sizepolicy>
          </property>
          <property name="toolTip">
-          <string>&lt;p&gt;Instead of loading the configuration file at user's local storage, loads the template one inside the pgModeler's installation folder.&lt;/p&gt;</string>
+          <string>&lt;p&gt;Instead of loading the configuration file at user's local storage, loads the template one inside the gpModeler's installation folder.&lt;/p&gt;</string>
          </property>
          <property name="text">
           <string>Use template configuration file</string>
