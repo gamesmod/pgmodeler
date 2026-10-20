@@ -78,7 +78,7 @@ class __libparsers XmlParser {
 		xml_decl;
 
 		/*! \brief Remove the original DTD from the document. This is done to evit that
-		 the user insert some external dtd in the model file that is not valid for pgModeler */
+		 the user insert some external dtd in the model file that is not valid for gpModeler */
 		void removeDTD();
 
 		/*! \brief Makes the interpretation of XML inside the buffer validating it according to

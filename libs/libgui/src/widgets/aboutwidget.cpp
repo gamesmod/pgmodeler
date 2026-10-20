@@ -53,8 +53,9 @@ AboutWidget::AboutWidget(QWidget *parent) : QWidget(parent)
 
 <br/>
 
-**DEVELOPMENT, MAINTENANCE AND COMMERCIAL DISTRIBUTION BY:**
-*Nullptr Labs Software e Tecnologia LTDA* <[contact@nullptrlabs.io](contact@nullptrlabs.io)>
+**gpModeler is a fork of pgModeler, adapted for Greenplum and Apache Cloudberry.**
+
+Original work: pgModeler, (c) 2006-2026 Raphael Araújo e Silva, developed and maintained by *Nullptr Labs Software e Tecnologia LTDA* (https://pgmodeler.io). This fork is not affiliated with or endorsed by the original authors.
 
 <br/>
 
@@ -62,7 +63,7 @@ This program is free software: you can redistribute it and/or modify it under th
 
 <br/>
 
-The complete text of GPLv3 is at LICENSE file on pgModeler's source code root directory. Also, you can get the complete GNU General Public License at http://www.gnu.org/licenses.
+The complete text of GPLv3 is at LICENSE file on gpModeler's source code root directory. Also, you can get the complete GNU General Public License at http://www.gnu.org/licenses.
 )");
 }
 

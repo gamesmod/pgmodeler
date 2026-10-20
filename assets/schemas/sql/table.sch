@@ -76,12 +76,36 @@
 	$br [ INHERITS(] {ancestor-table} [)]
 %end
 
-%if ({pgsql-ver} <=f "11.0") %and {oids} %then
+%if %not {partitioned-table} %and {mpp} %then
+	%if {access-method} %then
+		$br [USING ] {access-method}
+	%end
+
+	%if {storage-options} %then
+		$br [WITH (] {storage-options} [)]
+	%end
+%end
+
+%if ({pgsql-ver} <=f "11.0") %and {oids} %and %not {mpp} %then
 	$br [WITH ( OIDS = TRUE )]
 %end
 
 %if {tablespace} %then
 	$br [TABLESPACE ] {tablespace}
+%end
+
+%if %not {partitioned-table} %and {mpp} %and {dist-policy} %then
+	%if ({dist-policy} == "hash") %then
+		$br [DISTRIBUTED BY (] {dist-keys} [)]
+	%end
+
+	%if ({dist-policy} == "random") %then
+		$br [DISTRIBUTED RANDOMLY]
+	%end
+
+	%if ({dist-policy} == "replicated") %then
+		$br [DISTRIBUTED REPLICATED]
+	%end
 %end
 
 ;

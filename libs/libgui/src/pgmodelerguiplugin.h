@@ -36,7 +36,7 @@
 	#include "privpluginsns.h"
 #endif
 
-/*	The plug-ins in pgModeler must be within the "plugins" folder in their own
+/*	The plug-ins in gpModeler must be within the "plugins" folder in their own
 		directory and must have the following basic structure:
 
 		 [PGMODELER_PLUGINS_DIR]/
@@ -64,7 +64,7 @@
 
 	Note: Plug-ins can have additional subdirectories but any reference to them must be made programatically by the plug-in author. */
 
-// Making the MainWindow class of pgModeler be known by the plugin interface
+// Making the MainWindow class of gpModeler be known by the plugin interface
 class MainWindow;
 class PluginsConfigWidget;
 

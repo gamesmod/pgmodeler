@@ -223,7 +223,7 @@ namespace CompatNs {
 			/** Special case for refereces used as view definition **
 
 						 If the flag 'refs_in_expr' isn't set indicates that the user defined a reference
-					 but has no used to define the view declaration, this way pgModeler will consider these
+					 but has no used to define the view declaration, this way gpModeler will consider these
 					 references as View definition expressions and will force the insertion of them as
 						 Reference::SQL_VIEW_DEFINITION.
 

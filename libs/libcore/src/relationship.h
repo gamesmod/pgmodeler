@@ -106,7 +106,7 @@ Must be manually simulated using the available binary relationships.
 	relationship the fisrt will be merge with the automaticaly created primary key.
 
 * "Many to Many" cannot be created as identifier because the two entities (tables)
-	are always strong (in pgModeler's implementation).
+	are always strong (in gpModeler's implementation).
 
 * Case the relationship is identifier, this means, there is a weak entity
 	in one side of the relatioship must be used the following rule:

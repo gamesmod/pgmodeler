@@ -22,7 +22,7 @@
 /**
 \ingroup pgmodeler-ch
 \class CrashHandlerForm
-\brief Implements the pgModeler's crash handler enabling the generation an analysis of crash report files.
+\brief Implements the gpModeler's crash handler enabling the generation an analysis of crash report files.
 */
 
 #ifndef CRASH_HANDLER_H

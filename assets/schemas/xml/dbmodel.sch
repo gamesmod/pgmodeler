@@ -16,6 +16,10 @@
 	[ protected=] "true"
 %end
 
+%if {server-flavor} %then
+	[ server-flavor=] "{server-flavor}"
+%end
+
 %if {max-obj-count} %then
 	[ max-obj-count=] "{max-obj-count}"
 %end

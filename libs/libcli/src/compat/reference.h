@@ -23,8 +23,8 @@
 \ingroup pgmodeler-cli
 \namespace CompatNs
 \class Reference
-\brief This is a minimal portion of the legacy class Reference (pgModeler 1.1.0-alpha1 and below) that is used to
-together with CompatNs::View to convert views in older models to the new format introduced by pgModeler 1.1.0-beta.
+\brief This is a minimal portion of the legacy class Reference (gpModeler 1.1.0-alpha1 and below) that is used to
+together with CompatNs::View to convert views in older models to the new format introduced by gpModeler 1.1.0-beta.
 */
 
 #ifndef COMPAT_REFERENCE_H

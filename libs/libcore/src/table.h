@@ -45,6 +45,22 @@ class __libcore Table: public PhysicalTable {
 		//! \brief Stores the policies
 		std::vector<TableObject *> policies;
 
+		/*! \brief MPP (Greenplum/Cloudberry) distribution policy: empty (server default),
+		 * DistHash, DistRandom or DistReplicated. Ignored when the code is generated for plain PostgreSQL */
+		QString dist_policy,
+
+		//! \brief Storage format (MPP only): empty (server default), StorageHeap, StorageAoRow, StorageAoColumn or StoragePax
+		storage,
+
+		//! \brief Compression of append-optimized/PAX storages (MPP only), e.g. zstd, zlib, quicklz, rle_type
+		compress_type;
+
+		//! \brief Compression level, 0 means unset
+		unsigned compress_level;
+
+		//! \brief Names of the columns that compose the hash distribution key
+		QStringList dist_columns;
+
 		//! \brief Indicates if the table is unlogged, which means, is not controled by the WAL (write ahead logs)
 		bool unlogged,
 
@@ -57,10 +73,36 @@ class __libcore Table: public PhysicalTable {
 		//! \brief Indicates if the table accepts OIDs
 		with_oid;
 
+		//! \brief Fills the attributes related to the MPP clauses (distribution, storage and its options)
+		void setMppAttributes(SchemaParser::CodeType def_type);
+
 	public:
+		static inline const QString
+		DistHash { "hash" },
+		DistRandom { "random" },
+		DistReplicated { "replicated" },
+		StorageHeap { "heap" },
+		StorageAoRow { "ao_row" },
+		StorageAoColumn { "ao_column" },
+		StoragePax { "pax" };
+
 		Table();
 
 		~Table() override;
+
+		/*! \brief Defines the MPP distribution policy and, for DistHash, the key columns.
+		 * An invalid combination (hash without columns or columns with another policy) raises an error */
+		void setDistribution(const QString &policy, const QStringList &columns = {});
+
+		QString getDistributionPolicy();
+		QStringList getDistributionColumns();
+
+		//! \brief Defines the MPP storage format and its compression (level 0 means unset)
+		void setStorage(const QString &stg, const QString &compression = "", unsigned level = 0);
+
+		QString getStorage();
+		QString getCompressionType();
+		unsigned getCompressionLevel();
 
 		//! \brief Defines if the table is unlogged
 		void setUnlogged(bool value);

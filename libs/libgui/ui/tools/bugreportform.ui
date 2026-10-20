@@ -434,7 +434,7 @@
           <item row="0" column="1">
            <widget class="QLabel" name="hint_lbl">
             <property name="text">
-             <string>You can also report this issue at any time in pgModeler's project repository on &lt;a href=&quot;https://github.com/pgmodeler/pgmodeler/issues&quot;&gt;GitHub&lt;/a&gt;. </string>
+             <string>You can also report this issue at any time in gpModeler's project repository on &lt;a href=&quot;https://github.com/gamesmod/gpmodeler/issues&quot;&gt;GitHub&lt;/a&gt;. </string>
             </property>
             <property name="textFormat">
              <enum>Qt::TextFormat::AutoText</enum>

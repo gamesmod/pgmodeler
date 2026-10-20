@@ -66,6 +66,9 @@ DatabaseWidget::DatabaseWidget(QWidget *parent): BaseObjectWidget(parent, Object
 	lccollate_cmb->addItems(loc_list);
 	lcctype_cmb->addItems(loc_list);
 
+	for(auto &flavor : PgSqlVersions::AllFlavors)
+		flavor_cmb->addItem(PgSqlVersions::getFlavorName(flavor), flavor);
+
 	setMinimumSize(700, 500);
 }
 
@@ -79,6 +82,7 @@ void DatabaseWidget::setAttributes(DatabaseModel *model)
 	connlim_sb->setValue(model->getConnectionLimit());
 	templatedb_edt->setText(model->getTemplateDB());
 	author_edt->setText(model->getAuthor());
+	flavor_cmb->setCurrentIndex(std::max(0, flavor_cmb->findData(model->getServerFlavor())));
 
 	idx=encoding_cmb->findText(~model->getEncoding());
 	if(idx < 0) idx=0;
@@ -118,6 +122,7 @@ void DatabaseWidget::applyConfiguration()
 		BaseObjectWidget::applyConfiguration();
 
 		model->setAuthor(author_edt->text().toUtf8());
+		model->setServerFlavor(flavor_cmb->currentData().toString());
 		model->setTemplateDB(templatedb_edt->text());
 		model->setConnectionLimit(connlim_sb->value());
 

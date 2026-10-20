@@ -23,11 +23,63 @@
 #include "exception.h"
 
 namespace PgSqlVersions {
+	static QString server_flavor { FlavorPostgreSQL };
+
+	QString getFlavorName(const QString &flavor)
+	{
+		if(flavor == FlavorGreenplum6)
+			return "Greenplum 6";
+
+		if(flavor == FlavorGreenplum7)
+			return "Greenplum 7";
+
+		if(flavor == FlavorCloudberry)
+			return "Apache Cloudberry";
+
+		return "PostgreSQL";
+	}
+
+	QString getFlavorBaseVersion(const QString &flavor)
+	{
+		if(flavor == FlavorGreenplum6)
+			return PgSqlVersion94;
+
+		if(flavor == FlavorGreenplum7)
+			return PgSqlVersion120;
+
+		if(flavor == FlavorCloudberry)
+			return PgSqlVersion140;
+
+		return "";
+	}
+
+	bool isMppFlavor(const QString &flavor)
+	{
+		return flavor == FlavorGreenplum6 ||
+					 flavor == FlavorGreenplum7 ||
+					 flavor == FlavorCloudberry;
+	}
+
+	void setServerFlavor(const QString &flavor)
+	{
+		server_flavor = AllFlavors.contains(flavor) ? flavor : FlavorPostgreSQL;
+	}
+
+	QString getServerFlavor()
+	{
+		return server_flavor;
+	}
+
 	QString parseString(const QString &pgsql_ver, bool ignore_legacy_ver)
 	{
 		unsigned curr_ver = QString(pgsql_ver).remove('.').toUInt(),
 				min_ver = QString(MinimumVersion).remove('.').toUInt(),
 				default_ver = QString(DefaulVersion).remove('.').toUInt();
+
+		/* Greenplum 6 is based on PostgreSQL 9.4 so versions below the
+		 * minimum one are valid when generating code for it */
+		if(server_flavor == FlavorGreenplum6)
+			ignore_legacy_ver = true;
 
 		if(!ignore_legacy_ver && curr_ver != 0 && (curr_ver < min_ver))
 		{

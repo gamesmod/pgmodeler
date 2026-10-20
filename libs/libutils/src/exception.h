@@ -22,7 +22,7 @@
 /**
 \ingroup libutils
 \class Exception
-\brief Catalogs all the errors raised by pgModeler
+\brief Catalogs all the errors raised by gpModeler
 \note <strong>Creation date:</strong> 10/07/2006
 */
 
@@ -317,12 +317,14 @@ enum class ErrorCode: unsigned {
 	InvExprMultilineGroup,
 	InvExprPersistentGroup,
 	InvExtensionObject,
-	AsgInvSchemaExtension
+	AsgInvSchemaExtension,
+	InvDistributionKeyColumn,
+	InvDistributionKeys
 };
 
 class __libutils Exception {
 	private:
-		static constexpr unsigned ErrorCount=271;
+		static constexpr unsigned ErrorCount=273;
 
 		//! \brief Constants used to access the error details
 		static constexpr unsigned ErrorCodeId=0, ErrorMessage=1;

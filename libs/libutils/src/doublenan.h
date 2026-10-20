@@ -21,7 +21,7 @@
 
 /**
 \ingroup libutils
-\brief Definition of a shortcut to double NAN used by some portions of pgModeler mainly when dealing with graphical operations
+\brief Definition of a shortcut to double NAN used by some portions of gpModeler mainly when dealing with graphical operations
 */
 
 #ifndef DOUBLE_NAN_H

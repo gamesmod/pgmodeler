@@ -34,6 +34,7 @@
 
 namespace PgSqlVersions {
 	inline const QString
+	PgSqlVersion94("9.4"),
 	PgSqlVersion100("10.0"),
 	PgSqlVersion110("11.0"),
 	PgSqlVersion120("12.0"),
@@ -52,6 +53,32 @@ namespace PgSqlVersions {
 		PgSqlVersion150, PgSqlVersion140, PgSqlVersion130,
 		PgSqlVersion120, PgSqlVersion110, PgSqlVersion100
 	};
+
+	/*! \brief Server flavors. Besides vanilla PostgreSQL, gpModeler can generate code
+	 * for MPP engines derived from it. Each flavor is mapped to the version of PostgreSQL
+	 * it is based on, which is the one used to select version dependent syntax */
+	inline const QString
+	FlavorPostgreSQL("postgresql"),
+	FlavorGreenplum6("greenplum6"), // PostgreSQL 9.4 based
+	FlavorGreenplum7("greenplum7"), // PostgreSQL 12 based
+	FlavorCloudberry("cloudberry"); // PostgreSQL 14 based
+
+	inline const QStringList
+	AllFlavors = { FlavorPostgreSQL, FlavorGreenplum6, FlavorGreenplum7, FlavorCloudberry };
+
+	//! \brief Returns the human readable name of the flavor
+	__libutils QString getFlavorName(const QString &flavor);
+
+	//! \brief Returns the PostgreSQL version the flavor is based on (empty for FlavorPostgreSQL)
+	__libutils QString getFlavorBaseVersion(const QString &flavor);
+
+	//! \brief Returns true when the flavor is a MPP engine (Greenplum or Cloudberry)
+	__libutils bool isMppFlavor(const QString &flavor);
+
+	/*! \brief Defines the flavor used in code generation. An invalid value falls back to FlavorPostgreSQL.
+	 * The versions below MinimumVersion are accepted by parseString only when the flavor is Greenplum 6 */
+	__libutils void setServerFlavor(const QString &flavor);
+	__libutils QString getServerFlavor();
 
 	/*! \brief Parses and checks a string contaning a PostgreSQL version in the form [major.minor]
 	 * When the flag ignore_legacy_ver is true, this method will raise an error if an invalid version

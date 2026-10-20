@@ -2,7 +2,7 @@
 [<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">] \n
 \t [<mime-type type="application/sch">]
 
-\t [<comment>pgModeler Schema File</comment>] \n
+\t [<comment>gpModeler Schema File</comment>] \n
 \t [<icon name=] "&{icon}" [/>] \n
 \t [<glob-deleteall/>] \n
 \t [<glob pattern="*.sch"/>] \n

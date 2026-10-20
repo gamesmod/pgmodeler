@@ -200,6 +200,26 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QLabel" name="flavor_lbl">
+           <property name="text">
+            <string>Server flavor</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="flavor_cmb">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Target engine of the model. Greenplum and Apache Cloudberry enable the MPP specific options, e.g., table distribution and storage.</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
        <item row="3" column="0">

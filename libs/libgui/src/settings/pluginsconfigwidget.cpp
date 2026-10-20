@@ -28,7 +28,7 @@ PluginsConfigWidget::PluginsConfigWidget(QWidget *parent) : BaseConfigWidget(par
 	setupUi(this);
 
 	root_dir_sel = new PathSelectorWidget(this);
-	root_dir_sel->setToolTip(tr("pgModeler plugins directory"));
+	root_dir_sel->setToolTip(tr("gpModeler plugins directory"));
 	root_dir_sel->setReadOnly(true);
 	root_dir_sel->setDirectoryMode(true);
 	root_dir_sel->setSelectedPath(GlobalAttributes::getPluginsPath());

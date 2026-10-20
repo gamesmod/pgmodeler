@@ -1210,6 +1210,23 @@ QString BaseObject::getPgSQLVersion()
 	return pgsql_ver;
 }
 
+void BaseObject::setServerFlavor(const QString &flavor)
+{
+	PgSqlVersions::setServerFlavor(flavor);
+
+	QString base_ver = PgSqlVersions::getFlavorBaseVersion(PgSqlVersions::getServerFlavor());
+
+	if(!base_ver.isEmpty())
+		setPgSQLVersion(base_ver);
+	else if(pgsql_ver.toDouble() < PgSqlVersions::MinimumVersion.toDouble())
+		setPgSQLVersion(PgSqlVersions::DefaulVersion);
+}
+
+QString BaseObject::getServerFlavor()
+{
+	return PgSqlVersions::getServerFlavor();
+}
+
 attribs_map BaseObject::getSearchAttributes()
 {
 	return search_attribs;
@@ -1360,7 +1377,9 @@ bool BaseObject::isCodeDiffersFrom(BaseObject *object, const QStringList &ignore
 
 QString BaseObject::getCachedCode(unsigned def_type, bool reduced_form)
 {
-	if(def_type==SchemaParser::SqlCode && schparser.getPgSQLVersion()!=BaseObject::pgsql_ver)
+	if(def_type==SchemaParser::SqlCode &&
+		 (schparser.getPgSQLVersion()!=BaseObject::pgsql_ver ||
+			schparser.getFlavor()!=PgSqlVersions::getServerFlavor()))
 		code_invalidated=true;
 
 	if(!code_invalidated &&

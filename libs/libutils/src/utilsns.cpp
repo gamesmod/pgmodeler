@@ -190,7 +190,7 @@ namespace UtilsNs {
 
 		QStringList s_trace;
 
-		s_trace.append(QString("** pgModeler crashed after receive signal: %1 **\n\nDate/Time: %2 \nVersion: %3 \nBuild: %4 \n")
+		s_trace.append(QString("** gpModeler crashed after receive signal: %1 **\n\nDate/Time: %2 \nVersion: %3 \nBuild: %4 \n")
 									 .arg(signal)
 									 .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"),
 												GlobalAttributes::PgModelerVersion,

@@ -1104,7 +1104,7 @@
     <string>Exit</string>
    </property>
    <property name="toolTip">
-    <string>Exit pgModeler</string>
+    <string>Exit gpModeler</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
@@ -1122,7 +1122,7 @@
      <normaloff>:/icons/icons/about.png</normaloff>:/icons/icons/about.png</iconset>
    </property>
    <property name="text">
-    <string>About pgModeler</string>
+    <string>About gpModeler</string>
    </property>
    <property name="shortcut">
     <string>F4</string>
@@ -1326,7 +1326,7 @@
     <string>Configure</string>
    </property>
    <property name="toolTip">
-    <string>Edit pgModeler settings</string>
+    <string>Edit gpModeler settings</string>
    </property>
    <property name="shortcut">
     <string>F12</string>
@@ -1513,7 +1513,7 @@
     <string>Donate</string>
    </property>
    <property name="toolTip">
-    <string>Help pgModeler by donating!</string>
+    <string>Help gpModeler by donating!</string>
    </property>
   </action>
   <action name="action_compact_view">

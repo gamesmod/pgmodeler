@@ -4,7 +4,7 @@
 [GenericName=PostgreSQL Database Modeler] \n
 [Icon=]&{icon} \n
 [MimeType=application/dbm] \n
-[Name=pgModeler] \n
+[Name=gpModeler] \n
 [NoDisplay=false] \n
 [Path=]&{working-dir} \n
 [StartupNotify=false] \n

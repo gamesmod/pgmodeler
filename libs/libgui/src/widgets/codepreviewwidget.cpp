@@ -71,7 +71,12 @@ void CodePreviewWidget::generateSQLCode()
 	prev_pg_ver = version_cmb->currentIndex();
 	prev_code_opt = code_options_cmb->currentIndex();
 
-	BaseObject::setPgSQLVersion(version_cmb->currentText());
+	/* For MPP flavors the PostgreSQL version is fixed by the engine, so the
+	 * version selected in the combo is only applied to plain PostgreSQL models */
+	BaseObject::setServerFlavor(dbmodel->getServerFlavor());
+
+	if(!PgSqlVersions::isMppFlavor(BaseObject::getServerFlavor()))
+		BaseObject::setPgSQLVersion(version_cmb->currentText());
 
 	if(object && object->getObjectType() == ObjectType::Database)
 		sqlcode_txt->setPlainText(object->getSourceCode(SchemaParser::SqlCode));

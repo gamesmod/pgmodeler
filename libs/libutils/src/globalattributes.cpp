@@ -42,28 +42,28 @@ const QString GlobalAttributes::PgModelerVersion {
  * This is used to automatically copy configuration files config from a previous
  * version to the new one. More details in Application::createUserConfiguration()
  * !!! ALWAYS UPDATE THESE VARIABLES WHEN UPGRADING THE MAJOR VERSION !!! */
-const QString GlobalAttributes::PgModelerAppName {"pgmodeler-2.0"};
+const QString GlobalAttributes::PgModelerAppName {"gpmodeler-2.0"};
 
 /* In versions 1.0.x and 1.1.x there was no distinction in the configuration directory.
  * So, until we upgrade to 1.2, we have to use the pgmodeler-1.0 as the previous
  * version configuration directory */
-const QString GlobalAttributes::PgModelerOldAppName {"pgmodeler-1.2"};
+const QString GlobalAttributes::PgModelerOldAppName {"pgmodeler-2.0"};
 
-const QString GlobalAttributes::PgModelerURI {"pgmodeler.io"};
+const QString GlobalAttributes::PgModelerURI {"github.com/gamesmod/gpmodeler"};
 const QString GlobalAttributes::PgModelerBuildNumber { QString("%1.%2").arg(BUILDDATE, BUILDNUM) };
 
 const QString GlobalAttributes::PgModelerSite {
 #ifdef PGMODELER_DEBUG
 	 "http://localhost:8000"
 #else
-	"https://pgmodeler.io"
+	"https://github.com/gamesmod/gpmodeler"
 #endif
 };
 
-const QString GlobalAttributes::PgModelerSupport { PgModelerSite + "/support/docs" };
-const QString GlobalAttributes::PgModelerSourceURL { "https://github.com/nullptrlabs/pgmodeler/releases" };
-const QString GlobalAttributes::PgModelerDownloadURL { PgModelerSite + "/download" };
-const QString GlobalAttributes::PgModelerDonateURL { PgModelerSite + "/#donationForm" };
+const QString GlobalAttributes::PgModelerSupport { PgModelerSite + "/wiki" };
+const QString GlobalAttributes::PgModelerSourceURL { "https://github.com/gamesmod/gpmodeler/releases" };
+const QString GlobalAttributes::PgModelerDownloadURL { PgModelerSite + "/releases" };
+const QString GlobalAttributes::PgModelerDonateURL { PgModelerSite };
 const QString GlobalAttributes::PgModelerUpdateCheckURL { PgModelerSite + "/checkupdate?version=%1&mode=%2" };
 
 const QString GlobalAttributes::NullptrLabsSite { "https://nullptrlabs.io" };
@@ -81,8 +81,8 @@ const QString GlobalAttributes::EnvPgModelerSePath {"PGMODELER_SE_PATH"};
 const QString GlobalAttributes::EnvPgModelerPath {"PGMODELER_PATH"};
 
 const QString GlobalAttributes::PgmPathsConfFile {"pgmpaths"};
-const QString GlobalAttributes::BugReportEmail {"bug@pgmodeler.io"};
-const QString GlobalAttributes::BugReportFile {"pgmodeler%1.bug"};
+const QString GlobalAttributes::BugReportEmail {"https://github.com/gamesmod/gpmodeler/issues"};
+const QString GlobalAttributes::BugReportFile {"gpmodeler%1.bug"};
 const QString GlobalAttributes::StacktraceFile {".stacktrace"};
 const QString GlobalAttributes::LastModelFile {"lastmodel"};
 
@@ -349,20 +349,20 @@ void GlobalAttributes::setSearchPath(const QString &search_path)
 	#ifdef Q_OS_UNIX
 	#ifdef Q_OS_MACOS
 		//For MacOSX the crash handler path is fixed (inside bundle)
-		PgModelerCHandlerPath=getPathFromEnv(EnvPgModelerChPath, QString("%1/pgmodeler-ch").arg(BINDIR), QString("%1/pgmodeler-ch").arg(search_path));
+		PgModelerCHandlerPath=getPathFromEnv(EnvPgModelerChPath, QString("%1/gpmodeler-ch").arg(BINDIR), QString("%1/gpmodeler-ch").arg(search_path));
 	#else
-		PgModelerCHandlerPath=getPathFromEnv(EnvPgModelerChPath, QString("%1/pgmodeler-ch").arg(PRIVATEBINDIR), QString("%1/pgmodeler-ch").arg(search_path));
+		PgModelerCHandlerPath=getPathFromEnv(EnvPgModelerChPath, QString("%1/gpmodeler-ch").arg(PRIVATEBINDIR), QString("%1/gpmodeler-ch").arg(search_path));
 	#endif
 
-	PgModelerCLIPath=getPathFromEnv(EnvPgModelerCliPath, QString("%1/pgmodeler-cli").arg(BINDIR), QString("%1/pgmodeler-cli").arg(search_path));
-	PgModelerAppPath=getPathFromEnv(EnvPgModelerPath, QString("%1/pgmodeler").arg(BINDIR), QString("%1/pgmodeler").arg(search_path));
-	PgModelerSchemaEditorPath=getPathFromEnv(EnvPgModelerSePath, QString("%1/pgmodeler-se").arg(BINDIR), QString("%1/pgmodeler-se").arg(search_path));
+	PgModelerCLIPath=getPathFromEnv(EnvPgModelerCliPath, QString("%1/gpmodeler-cli").arg(BINDIR), QString("%1/gpmodeler-cli").arg(search_path));
+	PgModelerAppPath=getPathFromEnv(EnvPgModelerPath, QString("%1/gpmodeler").arg(BINDIR), QString("%1/gpmodeler").arg(search_path));
+	PgModelerSchemaEditorPath=getPathFromEnv(EnvPgModelerSePath, QString("%1/gpmodeler-se").arg(BINDIR), QString("%1/gpmodeler-se").arg(search_path));
 
 #else
-	PgModelerCHandlerPath=getPathFromEnv(EnvPgModelerChPath, QString("%1\\pgmodeler-ch.exe").arg(PRIVATEBINDIR), QString("%1\\pgmodeler-ch.exe").arg(search_path));
-	PgModelerCLIPath=getPathFromEnv(EnvPgModelerCliPath, QString("%1\\pgmodeler-cli.exe").arg(PRIVATEBINDIR), QString("%1\\pgmodeler-cli.exe").arg(search_path));
-	PgModelerAppPath=getPathFromEnv(EnvPgModelerPath, QString("%1\\pgmodeler.exe").arg(BINDIR), QString("%1\\pgmodeler.exe").arg(search_path));
-	PgModelerSchemaEditorPath=getPathFromEnv(EnvPgModelerSePath, QString("%1/pgmodeler-se.exe").arg(BINDIR), QString("%1/pgmodeler-sc.exe").arg(search_path));
+	PgModelerCHandlerPath=getPathFromEnv(EnvPgModelerChPath, QString("%1\\gpmodeler-ch.exe").arg(PRIVATEBINDIR), QString("%1\\gpmodeler-ch.exe").arg(search_path));
+	PgModelerCLIPath=getPathFromEnv(EnvPgModelerCliPath, QString("%1\\gpmodeler-cli.exe").arg(PRIVATEBINDIR), QString("%1\\gpmodeler-cli.exe").arg(search_path));
+	PgModelerAppPath=getPathFromEnv(EnvPgModelerPath, QString("%1\\gpmodeler.exe").arg(BINDIR), QString("%1\\gpmodeler.exe").arg(search_path));
+	PgModelerSchemaEditorPath=getPathFromEnv(EnvPgModelerSePath, QString("%1/gpmodeler-se.exe").arg(BINDIR), QString("%1/gpmodeler-se.exe").arg(search_path));
 #endif
 }
 

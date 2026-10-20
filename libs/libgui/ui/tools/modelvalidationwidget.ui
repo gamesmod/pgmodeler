@@ -349,7 +349,7 @@
            </sizepolicy>
           </property>
           <property name="toolTip">
-           <string>&lt;p&gt;pgModeler will generate unique and temporary names for database, role and tablespace objects. This option avoids object duplication errors when running the SQL validation.&lt;/p&gt;</string>
+           <string>&lt;p&gt;gpModeler will generate unique and temporary names for database, role and tablespace objects. This option avoids object duplication errors when running the SQL validation.&lt;/p&gt;</string>
           </property>
           <property name="statusTip">
            <string/>

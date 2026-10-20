@@ -23,7 +23,7 @@
 \ingroup pgmodeler
 \class PgModelerApp
 \brief This class inherits from QApplication and has the notify() method modified
- to treat the exceptions raised by pgModeler components.
+ to treat the exceptions raised by gpModeler components.
 */
 
 #ifndef PGMODELER_APP_H

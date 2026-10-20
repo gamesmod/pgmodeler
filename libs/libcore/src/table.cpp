@@ -25,6 +25,7 @@ Table::Table()
 {
 	obj_type = ObjectType::Table;
 	with_oid=unlogged=rls_enabled=rls_forced=false;
+	compress_level = 0;
 	attributes[Attributes::Unlogged]="";
 	attributes[Attributes::RlsEnabled]="";
 	attributes[Attributes::RlsForced]="";
@@ -339,6 +340,61 @@ void Table::setWithOIDs(bool value)
 	with_oid=value;
 }
 
+void Table::setDistribution(const QString &policy, const QStringList &columns)
+{
+	if(!policy.isEmpty() && policy != DistHash && policy != DistRandom && policy != DistReplicated)
+	{
+		throw Exception(Exception::getErrorMessage(ErrorCode::InvDistributionKeys)
+										.arg(policy, getSignature()),
+										ErrorCode::InvDistributionKeys, PGM_FUNC, PGM_FILE, PGM_LINE);
+	}
+
+	if((policy == DistHash && columns.isEmpty()) ||
+		 (policy != DistHash && !columns.isEmpty()))
+	{
+		throw Exception(Exception::getErrorMessage(ErrorCode::InvDistributionKeys)
+										.arg(policy.isEmpty() ? "-" : policy, getSignature()),
+										ErrorCode::InvDistributionKeys, PGM_FUNC, PGM_FILE, PGM_LINE);
+	}
+
+	setCodeInvalidated(dist_policy != policy || dist_columns != columns);
+	dist_policy = policy;
+	dist_columns = columns;
+}
+
+QString Table::getDistributionPolicy()
+{
+	return dist_policy;
+}
+
+QStringList Table::getDistributionColumns()
+{
+	return dist_columns;
+}
+
+void Table::setStorage(const QString &stg, const QString &compression, unsigned level)
+{
+	setCodeInvalidated(storage != stg || compress_type != compression || compress_level != level);
+	storage = stg;
+	compress_type = compression;
+	compress_level = level;
+}
+
+QString Table::getStorage()
+{
+	return storage;
+}
+
+QString Table::getCompressionType()
+{
+	return compress_type;
+}
+
+unsigned Table::getCompressionLevel()
+{
+	return compress_level;
+}
+
 bool Table::isWithOIDs()
 {
 	return with_oid;
@@ -362,6 +418,78 @@ bool Table::isReferTableOnForeignKey(Table *ref_tab)
 	return found;
 }
 
+void Table::setMppAttributes(SchemaParser::CodeType def_type)
+{
+	attributes[Attributes::DistPolicy] = "";
+	attributes[Attributes::DistKeys] = "";
+	attributes[Attributes::Storage] = "";
+	attributes[Attributes::CompressType] = "";
+	attributes[Attributes::CompressLevel] = "";
+	attributes[Attributes::AccessMethod] = "";
+	attributes[Attributes::StorageOptions] = "";
+
+	if(def_type == SchemaParser::XmlCode)
+	{
+		attributes[Attributes::DistPolicy] = dist_policy;
+		attributes[Attributes::DistKeys] = dist_columns.join(',');
+		attributes[Attributes::Storage] = storage;
+		attributes[Attributes::CompressType] = compress_type;
+		attributes[Attributes::CompressLevel] = compress_level ? QString::number(compress_level) : "";
+		return;
+	}
+
+	// The MPP clauses are only generated for the flavors that support them
+	if(!PgSqlVersions::isMppFlavor(PgSqlVersions::getServerFlavor()))
+		return;
+
+	QStringList options;
+
+	if(dist_policy == DistHash)
+	{
+		QStringList cols;
+
+		for(auto &col_name : dist_columns)
+		{
+			Column *col = getColumn(col_name);
+
+			if(!col)
+			{
+				throw Exception(Exception::getErrorMessage(ErrorCode::InvDistributionKeyColumn)
+												.arg(col_name, getSignature()),
+												ErrorCode::InvDistributionKeyColumn, PGM_FUNC, PGM_FILE, PGM_LINE);
+			}
+
+			cols.append(col->getName(true));
+		}
+
+		attributes[Attributes::DistKeys] = cols.join(", ");
+	}
+
+	attributes[Attributes::DistPolicy] = dist_policy;
+
+	if(PgSqlVersions::getServerFlavor() == PgSqlVersions::FlavorGreenplum6)
+	{
+		// Greenplum 6 has no table access methods: the storage is selected through reloptions
+		if(storage == StorageAoRow || storage == StorageAoColumn)
+		{
+			options.append("appendonly=true");
+
+			if(storage == StorageAoColumn)
+				options.append("orientation=column");
+		}
+	}
+	else if(!storage.isEmpty())
+		attributes[Attributes::AccessMethod] = storage;
+
+	if(!compress_type.isEmpty() && storage != StorageHeap)
+		options.append(QString("compresstype=%1").arg(compress_type));
+
+	if(compress_level > 0 && storage != StorageHeap)
+		options.append(QString("compresslevel=%1").arg(compress_level));
+
+	attributes[Attributes::StorageOptions] = options.join(", ");
+}
+
 QString Table::__getSourceCode(SchemaParser::CodeType def_type, bool incl_rel_added_objs, bool incl_constraints)
 {
 	setTableAttributes(def_type, incl_rel_added_objs, incl_constraints);
@@ -371,6 +499,8 @@ QString Table::__getSourceCode(SchemaParser::CodeType def_type, bool incl_rel_ad
 	attributes[Attributes::RlsEnabled]=(rls_enabled ? Attributes::True : "");
 	attributes[Attributes::RlsForced]=(rls_forced ? Attributes::True : "");
 	attributes[Attributes::CopyTable]="";
+
+	setMppAttributes(def_type);
 
 	if(def_type==SchemaParser::SqlCode && copy_table)
 		attributes[Attributes::CopyTable]=copy_table->getName(true) + copy_op.getSQLDefinition();
@@ -417,6 +547,11 @@ void Table::operator = (Table &tab)
 	this->with_oid=tab.with_oid;
 	this->rls_forced=tab.rls_forced;
 	this->rls_enabled=tab.rls_enabled;
+	this->dist_policy=tab.dist_policy;
+	this->dist_columns=tab.dist_columns;
+	this->storage=tab.storage;
+	this->compress_type=tab.compress_type;
+	this->compress_level=tab.compress_level;
 }
 
 QString Table::getTruncateDefinition(bool cascade)

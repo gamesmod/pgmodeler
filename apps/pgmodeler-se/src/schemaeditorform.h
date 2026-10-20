@@ -22,7 +22,7 @@
 /**
 \ingroup pgmodeler-se
 \class SchemaEditorForm
-\brief Implements the pgModeler's schema files editor and syntax checker.
+\brief Implements the gpModeler's schema files editor and syntax checker.
 */
 
 #ifndef SCHEMA_EDITOR_FORM_H

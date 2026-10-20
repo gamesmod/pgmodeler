@@ -422,7 +422,7 @@ QStringList SchemaEditorForm::showFileDialog(bool save_mode)
 	QStringList files, filters= {
 		tr("Schema file (*%1)").arg(GlobalAttributes::SchemaExt),
 		tr("Database model file (*%1)").arg(GlobalAttributes::DbModelExt),
-		tr("pgModeler config file (*%1)").arg(GlobalAttributes::ConfigurationExt),
+		tr("gpModeler config file (*%1)").arg(GlobalAttributes::ConfigurationExt),
 		tr("Objects metadata file (*%1)").arg(GlobalAttributes::ObjMetadataExt),
 		tr("SQL script file (*.sql)"),
 		tr("XML file (*.xml)"),

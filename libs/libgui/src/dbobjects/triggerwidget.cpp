@@ -78,7 +78,7 @@ void TriggerWidget::selectUpdateEvent()
 		col_picker_wgt->clear();
 
 	/* Disable the columns tab when the trigger belongs to a view.
-	 * pgModeler does not support triggers reference view columns (yet) */
+	 * gpModeler does not support triggers reference view columns (yet) */
 	trig_attribs_tbw->setTabEnabled(trig_attribs_tbw->indexOf(columns_pg),
 																	update_chk->isChecked() &&
 																	table->getObjectType() == ObjectType::Table);

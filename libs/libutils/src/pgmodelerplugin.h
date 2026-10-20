@@ -63,7 +63,7 @@ class __libutils PgModelerPlugin {
 		 *
 		 * If root_path or plugin_name is empty, this method returns an empty (invalid) path.
 		 *
-		 * NOTE: always validate the path returned by this method since it's not restricted to the pgModeler installation root!
+		 * NOTE: always validate the path returned by this method since it's not restricted to the gpModeler installation root!
 		 */
 		template<typename ...args>
 		static QString getPluginFilePath(const QString &plugin_name, const QString &root_path, args... pth_elems)
@@ -75,12 +75,12 @@ class __libutils PgModelerPlugin {
 		}
 
 		/*! \brief This method returns a path of a template file (asset) that resided in a plugin directory which in turn
-		 * is located in the plugin's root directory in a pgModeler installation.
+		 * is located in the plugin's root directory in a gpModeler installation.
 		 *
 		 * The parameters pack pth_elems is a list of 0 or more arguments that will be appended to the path formed by
 		 * in the same sequence as they appear.
 		 *
-		 * For example, say we have a pgModeler installation in /opt/pgmodeler, and the plugins directory is located at /opt/pgmodeler/plugins.
+		 * For example, say we have a gpModeler installation in /opt/pgmodeler, and the plugins directory is located at /opt/pgmodeler/plugins.
 		 * Now considering that plugin_name is "foo", we'll get the following results depending on what pth_elems specifis:
 		 *
 		 *  > pth_elems = "" --> /opt/pgmodeler/plugins/foo
@@ -95,7 +95,7 @@ class __libutils PgModelerPlugin {
 		}
 
 		/*! \brief This method returns the full path to a file inside a subdirectory in the plugin's
-		 * configuration directory inside the pgModeler's user settings directory.
+		 * configuration directory inside the gpModeler's user settings directory.
 		 *
 		 * The parameters pack pth_elems is a list of 0 or more arguments that will be appended to the path formed by
 		 * in the same sequence as they appear.

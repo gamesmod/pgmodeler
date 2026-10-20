@@ -50,7 +50,7 @@ GeneralConfigWidget::GeneralConfigWidget(QWidget * parent) : BaseConfigWidget(pa
 	Ui_GeneralConfigWidget::setupUi(this);
 
 	confs_dir_sel = new PathSelectorWidget(this);
-	confs_dir_sel->setToolTip(tr("pgModeler configurations directory for the current user"));
+	confs_dir_sel->setToolTip(tr("gpModeler configurations directory for the current user"));
 	confs_dir_sel->setReadOnly(true);
 	confs_dir_sel->setDirectoryMode(true);
 	confs_dir_sel->setSelectedPath(GlobalAttributes::getConfigurationsPath());

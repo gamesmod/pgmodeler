@@ -3459,6 +3459,7 @@ void DatabaseModel::loadModel(const QString &filename)
 		setObjectListsCapacity(attribs[Attributes::MaxObjCount].toUInt());
 
 		this->author = attribs[Attributes::Author];
+		setServerFlavor(attribs[Attributes::ServerFlavor]);
 
 		pos_str = attribs[Attributes::LastPosition].split(',');
 
@@ -5215,6 +5216,17 @@ Table *DatabaseModel::createTable()
 		table->setRLSEnabled(attribs[Attributes::RlsEnabled]==Attributes::True);
 		table->setRLSForced(attribs[Attributes::RlsForced]==Attributes::True);
 		table->setWithOIDs(attribs[Attributes::Oids]==Attributes::True);
+
+		table->setStorage(attribs[Attributes::Storage],
+											attribs[Attributes::CompressType],
+											attribs[Attributes::CompressLevel].toUInt());
+
+		if(!attribs[Attributes::DistPolicy].isEmpty())
+		{
+			table->setDistribution(attribs[Attributes::DistPolicy],
+														 attribs[Attributes::DistKeys].isEmpty() ?
+														 QStringList() : attribs[Attributes::DistKeys].split(','));
+		}
 
 		return table;
 	}
@@ -7890,9 +7902,21 @@ QString DatabaseModel::getSourceCode(SchemaParser::CodeType def_type, bool expor
 	return def;
 }
 
+void DatabaseModel::setServerFlavor(const QString &flavor)
+{
+	server_flavor = PgSqlVersions::AllFlavors.contains(flavor) ? flavor : PgSqlVersions::FlavorPostgreSQL;
+	BaseObject::setServerFlavor(server_flavor);
+}
+
+QString DatabaseModel::getServerFlavor()
+{
+	return server_flavor;
+}
+
 void DatabaseModel::setDatabaseModelAttributes(attribs_map &attribs, SchemaParser::CodeType code_type)
 {
 	attribs[Attributes::Author] = author;
+	attribs[Attributes::ServerFlavor] = server_flavor == PgSqlVersions::FlavorPostgreSQL ? "" : server_flavor;
 	attribs[Attributes::PgModelerVersion] = GlobalAttributes::PgModelerVersion;
 
 	if(code_type == SchemaParser::XmlCode)

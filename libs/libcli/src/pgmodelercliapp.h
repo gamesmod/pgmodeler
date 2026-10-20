@@ -86,7 +86,7 @@ class __libcli PgModelerCliApp: public Application {
 		plugin_op,
 		export_op;
 
-		//! \brief Holds the pgModeler version in which the model was constructed (used by the fix operation)
+		//! \brief Holds the gpModeler version in which the model was constructed (used by the fix operation)
 		QString model_version;
 
 		//! \brief Export helper object

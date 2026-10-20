@@ -15,7 +15,7 @@
 			PostgreSQL Database Modeler, или просто, pgModeler является свободным инструментом для моделирования баз данных. Он объединяет в себе классическую концепцию entity-relationship (ER) диаграмм с некоторыми осоденностями, реализованными только в PostgreSQL. Модели, созданные пользователем могут быть автоматически транслированы в SQL код и применены к БД на кластер (версии 9.*).
 		</p>
         <p xml:lang="fr">
-            pgModeler - Modélisateur de bases de données PostgreSQL - est un outil open source de modélisation conçu pour PostgreSQL. Plus de commandes DDL écrites à la main, laissez pgModeler faire le travail pour vous! Ce logiciel réconcilie les concepts des diagrammes entité-relation et les fonctionnalités que PostgreSQL fournit en tant qu'extensions au standard SQL.
+            gpModeler - Modélisateur de bases de données PostgreSQL - est un outil open source de modélisation conçu pour PostgreSQL. Plus de commandes DDL écrites à la main, laissez gpModeler faire le travail pour vous! Ce logiciel réconcilie les concepts des diagrammes entité-relation et les fonctionnalités que PostgreSQL fournit en tant qu'extensions au standard SQL.
 		</p>
 	</description>
 	<screenshots>

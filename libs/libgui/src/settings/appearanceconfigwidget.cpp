@@ -509,7 +509,7 @@ void AppearanceConfigWidget::loadThemesConfiguration()
 
 	if(!ignored_themes.isEmpty())
 	{
-		Messagebox::error(tr("Unable to load theme(s) <strong>%1</strong> in path <strong>%2</strong> due to some missing or corrputed configuration file(s)! pgModeler will fall back to the system default theme.")
+		Messagebox::error(tr("Unable to load theme(s) <strong>%1</strong> in path <strong>%2</strong> due to some missing or corrputed configuration file(s)! gpModeler will fall back to the system default theme.")
 										  .arg(ignored_themes.join(", "), themes_root_dir.absolutePath()),
 						ErrorCode::Custom, __PRETTY_FUNCTION__, __FILE__, __LINE__, errors);
 	}
